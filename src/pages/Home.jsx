@@ -26,25 +26,28 @@ function Home() {
     return (
         <main className="max-w-3xl mx-auto px-8">
 
+            {/* Background Glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[500px] bg-royal/10 blur-[120px] rounded-full pointer-events-none -z-10" />
+
             {/* Hero */}
             <section className="pt-32 pb-24 flex flex-col justify-center">
                 <Reveal delay={0}>
-                    <p className="text-gray-500 text-sm mb-4 tracking-widest uppercase font-mono">
+                    <p className="text-zinc-500 text-sm mb-4 tracking-widest uppercase font-mono">
                         Hey, I'm
                     </p>
                 </Reveal>
                 <Reveal delay={100}>
-                    <h1 className="text-6xl font-bold mb-4 leading-tight">
+                    <h1 className="text-6xl font-bold font-display tracking-tight text-zinc-50 mb-4 leading-tight">
                         Arya Prakash Raj
                     </h1>
                 </Reveal>
                 <Reveal delay={200}>
-                    <h2 className="text-xl text-gray-400 mb-6">
+                    <h2 className="text-xl text-zinc-400 mb-6">
                         Backend Developer · CS Student · Builder
                     </h2>
                 </Reveal>
                 <Reveal delay={300}>
-                    <p className="text-gray-400 leading-relaxed max-w-xl mb-8">
+                    <p className="text-zinc-400 leading-relaxed max-w-xl mb-8">
                         I build backend systems with Java and Spring Boot.
                         Third year CS student at Dhaanish Ahmed Institute of Technology,
                         figuring things out in public and writing about it.
@@ -53,11 +56,11 @@ function Home() {
                 <Reveal delay={400}>
                     <div className="flex gap-4 mb-12">
                         <Link to="/blog"
-                            className="px-5 py-2.5 bg-white text-black text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors">
+                            className="px-5 py-2.5 bg-zinc-50 text-zinc-950 text-sm font-medium rounded-lg hover:bg-zinc-200 transition-colors">
                             Read my blog
                         </Link>
                         <a href="#about"
-                            className="px-5 py-2.5 border border-white/20 text-sm rounded-lg hover:border-white/50 transition-colors">
+                            className="px-5 py-2.5 border border-zinc-800 text-sm rounded-lg hover:border-zinc-600 hover:text-zinc-300 transition-colors">
                             About me
                         </a>
                     </div>
@@ -65,15 +68,15 @@ function Home() {
                 <Reveal delay={500}>
                     <div className="flex gap-6">
                         <a href="https://github.com/aryaprakashraj" target="_blank" rel="noreferrer"
-                            className="text-gray-600 hover:text-white transition-colors text-sm font-mono">
+                            className="text-zinc-500 hover:text-royal transition-colors text-sm font-mono">
                             github →
                         </a>
                         <a href="https://linkedin.com/in/aryaprakashraj" target="_blank" rel="noreferrer"
-                            className="text-gray-600 hover:text-white transition-colors text-sm font-mono">
+                            className="text-zinc-500 hover:text-royal transition-colors text-sm font-mono">
                             linkedin →
                         </a>
                         <a href="mailto:aryaprakashraj@gmail.com"
-                            className="text-gray-600 hover:text-white transition-colors text-sm font-mono">
+                            className="text-zinc-500 hover:text-royal transition-colors text-sm font-mono">
                             email →
                         </a>
                     </div>
@@ -81,22 +84,22 @@ function Home() {
             </section>
 
             {/* About */}
-            <section id="about" className="py-24 border-t border-white/10">
+            <section id="about" className="py-24 border-t border-zinc-800">
                 <Reveal delay={0}>
-                    <p className="text-gray-500 text-sm mb-4 tracking-widest uppercase font-mono">About</p>
+                    <p className="text-zinc-500 text-sm mb-4 tracking-widest uppercase font-mono">About</p>
                 </Reveal>
                 <Reveal delay={100}>
-                    <h2 className="text-3xl font-bold mb-6">Who I am</h2>
+                    <h2 className="text-3xl font-bold font-display tracking-tight text-zinc-50 mb-6">Who I am</h2>
                 </Reveal>
                 <Reveal delay={200}>
-                    <p className="text-gray-300 leading-relaxed mb-4">
+                    <p className="text-zinc-400 leading-relaxed mb-4">
                         I'm a third-year Computer Science student focused on backend development.
                         I learn by building real things — this site is one of them, built from
                         scratch with Spring Boot and React.
                     </p>
                 </Reveal>
                 <Reveal delay={300}>
-                    <p className="text-gray-300 leading-relaxed">
+                    <p className="text-zinc-400 leading-relaxed">
                         I enjoy understanding how systems work under the hood — from REST APIs
                         and databases to OS internals and algorithms. 250+ LeetCode problems in Java,
                         actively preparing for placements.
@@ -106,8 +109,8 @@ function Home() {
 
             {/* Skills */}
             <Reveal delay={100}>
-                <section className="py-24 border-t border-white/10">
-                    <p className="text-gray-500 text-sm mb-8 tracking-widest uppercase font-mono">skills</p>
+                <section className="py-24 border-t border-zinc-800">
+                    <p className="text-zinc-500 text-sm mb-8 tracking-widest uppercase font-mono">skills</p>
                     <div className="grid grid-cols-2 gap-3">
                         {[
                             { category: "Languages", items: "Java, Python, SQL" },
@@ -117,9 +120,9 @@ function Home() {
                             { category: "CS Fundamentals", items: "DSA, OOP, OS concepts" },
                             { category: "Currently Learning", items: "React, System Design" },
                         ].map((skill) => (
-                            <div key={skill.category} className="border border-white/10 rounded-lg p-4 hover:border-white/20 transition-colors">
-                                <p className="text-xs text-gray-500 font-mono mb-1">{skill.category}</p>
-                                <p className="text-sm text-gray-300">{skill.items}</p>
+                            <div key={skill.category} className="border border-zinc-800 bg-zinc-900/30 rounded-xl p-4 hover:border-royal/30 hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(48,92,222,0.05)] transition-all duration-300">
+                                <p className="text-xs text-zinc-500 font-mono mb-1">{skill.category}</p>
+                                <p className="text-sm text-zinc-300">{skill.items}</p>
                             </div>
                         ))}
                     </div>
@@ -128,8 +131,8 @@ function Home() {
 
             {/* Projects */}
             <Reveal delay={100}>
-                <section id="projects" className="py-24 border-t border-white/10">
-                    <p className="text-gray-500 text-sm mb-8 tracking-widest uppercase font-mono">projects</p>
+                <section id="projects" className="py-24 border-t border-zinc-800">
+                    <p className="text-zinc-500 text-sm mb-8 tracking-widest uppercase font-mono">projects</p>
                     <div className="flex flex-col gap-4">
                         {[
                             {
@@ -152,14 +155,14 @@ function Home() {
                             },
                         ].map((project) => (
                             <a key={project.name} href={project.link} target="_blank" rel="noreferrer"
-                                className="border border-white/10 rounded-lg p-5 hover:border-white/30 transition-colors group">
-                                <h3 className="font-medium mb-1 group-hover:text-white transition-colors">
+                                className="border border-zinc-800 bg-zinc-900/30 rounded-xl p-6 hover:border-royal/40 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(48,92,222,0.1)] transition-all duration-300 group">
+                                <h3 className="font-medium text-zinc-200 mb-1 group-hover:text-royal transition-colors">
                                     {project.name}
                                 </h3>
-                                <p className="text-gray-500 text-sm mb-3">{project.desc}</p>
+                                <p className="text-zinc-500 text-sm mb-3">{project.desc}</p>
                                 <div className="flex gap-2 flex-wrap">
                                     {project.tags.map(tag => (
-                                        <span key={tag} className="text-xs px-2 py-1 bg-white/5 rounded font-mono text-gray-400">
+                                        <span key={tag} className="text-xs px-2 py-1 bg-zinc-800/50 rounded font-mono text-zinc-400">
                                             {tag}
                                         </span>
                                     ))}
@@ -172,24 +175,24 @@ function Home() {
 
             {/* Recent Writing */}
             <Reveal delay={100}>
-                <section className="py-24 border-t border-white/10">
+                <section className="py-24 border-t border-zinc-800">
                     <div className="flex justify-between items-center mb-8">
-                        <p className="text-gray-500 text-sm tracking-widest uppercase font-mono">recent writing</p>
-                        <Link to="/blog" className="text-xs text-gray-600 hover:text-white transition-colors font-mono">
+                        <p className="text-zinc-500 text-sm tracking-widest uppercase font-mono">recent writing</p>
+                        <Link to="/blog" className="text-xs text-zinc-500 hover:text-royal transition-colors font-mono">
                             all posts →
                         </Link>
                     </div>
                     {articles.length === 0 ? (
-                        <p className="text-gray-700 font-mono text-sm">no posts yet.</p>
+                        <p className="text-zinc-600 font-mono text-sm">no posts yet.</p>
                     ) : (
                         <div className="flex flex-col gap-4">
                             {articles.map(article => (
                                 <Link key={article.id} to={`/blog/${article.id}`}
-                                    className="group flex justify-between items-center py-3 border-b border-white/5 hover:border-white/20 transition-colors">
-                                    <span className="text-gray-300 group-hover:text-white transition-colors text-sm">
+                                    className="group flex justify-between items-center py-4 px-2 -mx-2 rounded-lg hover:bg-zinc-900/50 transition-colors">
+                                    <span className="text-zinc-300 group-hover:text-royal transition-colors text-sm">
                                         {article.title}
                                     </span>
-                                    <span className="text-xs text-gray-600 font-mono ml-4 shrink-0">
+                                    <span className="text-xs text-zinc-600 font-mono ml-4 shrink-0">
                                         {new Date(article.createdAt).toLocaleDateString('en-US', {
                                             month: 'short', day: 'numeric'
                                         })}
@@ -203,14 +206,14 @@ function Home() {
 
             {/* Contact */}
             <Reveal delay={100}>
-                <section id="contact" className="py-24 border-t border-white/10">
-                    <p className="text-gray-500 text-sm mb-4 tracking-widest uppercase font-mono">contact</p>
-                    <h2 className="text-3xl font-bold mb-4">Let's talk</h2>
-                    <p className="text-gray-400 mb-6">
+                <section id="contact" className="py-24 border-t border-zinc-800">
+                    <p className="text-zinc-500 text-sm mb-4 tracking-widest uppercase font-mono">contact</p>
+                    <h2 className="text-3xl font-bold font-display tracking-tight text-zinc-50 mb-4">Let's talk</h2>
+                    <p className="text-zinc-400 mb-6">
                         Open to internships, collaborations, or just a good conversation about tech.
                     </p>
                     <a href="mailto:aryaprakashraj@gmail.com"
-                        className="text-white hover:text-gray-300 transition-colors font-mono">
+                        className="text-zinc-300 hover:text-royal transition-colors font-mono">
                         aryaprakashraj@gmail.com →
                     </a>
                 </section>
@@ -218,8 +221,8 @@ function Home() {
 
             {/* Footer */}
             <Reveal delay={200}>
-                <footer className="py-8 border-t border-white/10 text-center">
-                    <p className="text-gray-700 text-xs font-mono">
+                <footer className="py-8 border-t border-zinc-800 text-center">
+                    <p className="text-zinc-600 text-xs font-mono">
                         built with Spring Boot + React · arya prakash · 2026
                     </p>
                 </footer>
