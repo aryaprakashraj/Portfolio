@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import api from '../api/axios'
+import Reveal from '../components/Reveal'
 
 function ArticlePage() {
   const { id } = useParams()
@@ -35,11 +36,14 @@ function ArticlePage() {
     <main className="min-h-screen px-8 pt-32 max-w-3xl mx-auto pb-24">
 
       {/* Back link */}
+      <Reveal>
       <Link to="/blog" className="text-gray-600 text-sm hover:text-white transition-colors font-mono mb-12 block">
         ← back
       </Link>
+      </Reveal>
 
       {/* Header */}
+      <Reveal delay={100}>
       <div className="mb-12">
         <h1 className="text-4xl font-bold mb-4 leading-tight">{article.title}</h1>
         <div className="flex items-center gap-4 text-sm text-gray-600">
@@ -60,11 +64,14 @@ function ArticlePage() {
           </div>
         )}
       </div>
+      </Reveal>
 
       {/* Content */}
+      <Reveal delay={200}>
       <div className="text-gray-300 leading-relaxed whitespace-pre-wrap">
         {article.content}
       </div>
+      </Reveal>
 
     </main>
   )
