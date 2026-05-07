@@ -89,7 +89,7 @@ function Home() {
                     <p className="text-zinc-500 text-sm mb-4 tracking-widest uppercase font-mono">About</p>
                 </Reveal>
                 <Reveal delay={100}>
-                    <h2 className="text-3xl font-bold font-display tracking-tight text-zinc-50 mb-6">Who I am</h2>
+                    <h2 className="text-3xl font-bold font-display tracking-tight text-zinc-50 mb-6">Who I am ?</h2>
                 </Reveal>
                 <Reveal delay={200}>
                     <p className="text-zinc-400 leading-relaxed mb-4">
@@ -136,7 +136,7 @@ function Home() {
                     <div className="flex flex-col gap-4">
                         {[
                             {
-                                name: "Personal Blog & Portfolio",
+                                name: "Personal Blog",
                                 desc: "Full-stack personal site with Spring Boot REST API, JWT auth, PostgreSQL, and React frontend.",
                                 tags: ["Spring Boot", "React", "PostgreSQL", "JWT"],
                                 link: "https://github.com/aryaprakashraj/Blog"
@@ -223,7 +223,7 @@ function Home() {
             <Reveal delay={200}>
                 <footer className="py-8 border-t border-zinc-800 text-center">
                     <p className="text-zinc-600 text-xs font-mono">
-                        built with Spring Boot + React · arya prakash · 2026
+                        built with Spring Boot + React · Aryaprakashraj · 2026
                     </p>
                 </footer>
             </Reveal>
