@@ -54,15 +54,6 @@ function ArticlePage() {
           </span>
           <span className="font-mono">{article.viewCount} views</span>
         </div>
-        {article.tags?.length > 0 && (
-          <div className="flex gap-2 flex-wrap mt-4">
-            {article.tags.map(tag => (
-              <span key={tag.id} className="text-xs px-2 py-1 bg-white/5 rounded font-mono text-gray-500">
-                {tag.name}
-              </span>
-            ))}
-          </div>
-        )}
       </div>
       </Reveal>
 

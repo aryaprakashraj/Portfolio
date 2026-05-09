@@ -43,13 +43,6 @@ function Blog(){
                                     })}
                                 </span>
                             </div>
-                            <div className="flex gap-2 flex-wrap mt-3">
-                                {article.tags?.map(tag => (
-                                    <span key={tag.id} className="text-xs px-2 py-1 bg-white/5 rounded font-mono text-gray-500">
-                                        {tag.name}
-                                    </span>
-                                ))}
-                            </div>
                         </Link>
                         </Reveal>
                     ))}
