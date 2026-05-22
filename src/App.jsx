@@ -4,6 +4,7 @@ import Blog from './pages/Blog'
 import ArticlePage from './pages/ArticlePage'
 import Admin from './pages/Admin'
 import Navbar from './components/Navbar'
+import ScrollToTop from './components/ScrollToTop'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/blog/:id" element={<ArticlePage />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
+        <ScrollToTop />
       </div>
     </BrowserRouter>
   )
