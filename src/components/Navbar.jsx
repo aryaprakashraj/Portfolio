@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 function Navbar() {
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [activeSection, setActiveSection] = useState('home')
   const location = useLocation()
 
   useEffect(() => {
@@ -16,22 +17,72 @@ function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Scroll Spy for Home page sections
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setActiveSection('')
+      return
+    }
+
+    const handleScrollSpy = () => {
+      const scrollPosition = window.scrollY + 200 // offset to trigger active state slightly early
+      
+      const aboutSection = document.getElementById('about')
+      const projectsSection = document.getElementById('projects')
+
+      let currentSection = 'home'
+
+      if (aboutSection) {
+        const aboutTop = aboutSection.getBoundingClientRect().top + window.scrollY
+        if (scrollPosition >= aboutTop) {
+          currentSection = 'about'
+        }
+      }
+
+      if (projectsSection) {
+        const projectsTop = projectsSection.getBoundingClientRect().top + window.scrollY
+        if (scrollPosition >= projectsTop) {
+          currentSection = 'projects'
+        }
+      }
+
+      // Detect if near the bottom of the page
+      const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 50
+      if (isAtBottom && projectsSection) {
+        currentSection = 'projects'
+      }
+
+      setActiveSection(currentSection)
+    }
+
+    window.addEventListener('scroll', handleScrollSpy)
+    // Run once on mount/location change to set initially
+    handleScrollSpy()
+
+    return () => window.removeEventListener('scroll', handleScrollSpy)
+  }, [location.pathname])
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const isActive = (path) => {
-    if (path === '/') {
-      return location.pathname === '/' && !location.hash;
+  const isLinkActive = (link) => {
+    if (link.to === '/blog') {
+      return location.pathname.startsWith('/blog')
     }
-    if (path.startsWith('/#')) {
-      return location.pathname === '/' && location.hash === path.slice(1);
+    if (location.pathname === '/') {
+      if (link.to === '/') {
+        return activeSection === 'home'
+      }
+      if (link.to === '/#about') {
+        return activeSection === 'about'
+      }
+      if (link.to === '/#projects') {
+        return activeSection === 'projects'
+      }
     }
-    if (path === '/blog') {
-      return location.pathname.startsWith('/blog');
-    }
-    return false;
-  };
+    return false
+  }
 
   const navLinks = [
     { label: 'Home', to: '/', onClick: scrollToTop },
@@ -49,26 +100,23 @@ function Navbar() {
       />
 
       <Link to="/" onClick={scrollToTop} className="text-lg font-bold tracking-tight font-display flex items-baseline group">
-        Arya<span className="font-mono text-royal group-hover:text-blue-400 transition-colors duration-300">.dev</span>
+        Arya<span className="font-mono text-royal group-hover:text-[#4d75ec] transition-colors duration-300">.dev</span>
       </Link>
       
       <div className="flex items-center gap-8">
         <div className="flex gap-8 text-sm font-medium">
           {navLinks.map((link) => {
-            const active = isActive(link.to)
+            const active = isLinkActive(link)
             return (
               <Link
                 key={link.label}
                 to={link.to}
                 onClick={link.onClick}
                 className={`relative py-1 transition-colors duration-300 ${
-                  active ? 'text-zinc-50' : 'text-zinc-400 hover:text-zinc-100'
+                  active ? 'text-royal font-semibold' : 'text-zinc-300 hover:text-zinc-100'
                 }`}
               >
                 {link.label}
-                {active && (
-                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-royal rounded-full shadow-[0_0_8px_#305CDE] animate-pulse" />
-                )}
               </Link>
             )
           })}

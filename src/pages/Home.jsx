@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import api from '../api/axios'
 import Reveal from '../components/Reveal'
@@ -9,6 +9,126 @@ function Home() {
     const [copied, setCopied] = useState(false)
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
     const [isHovered, setIsHovered] = useState(false)
+
+    const [viewMode, setViewMode] = useState('grid')
+    const [terminalInput, setTerminalInput] = useState('')
+    const [terminalHistory, setTerminalHistory] = useState([
+        { type: 'output', text: 'Welcome to Arya\'s Interactive Console v1.0.0' },
+        { type: 'output', text: 'Type "help" to see available commands, or click the suggestions below.' },
+    ])
+
+    const terminalBodyRef = useRef(null)
+    const terminalEndRef = useRef(null)
+
+    useEffect(() => {
+        if (terminalBodyRef.current) {
+            terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight
+        }
+    }, [terminalHistory])
+
+    const handleTerminalCommand = (cmdText) => {
+        const cleanCmd = cmdText.trim().toLowerCase();
+        if (!cleanCmd) return;
+
+        let response = [];
+        switch (cleanCmd) {
+            case 'help':
+                response = [
+                    { type: 'output', text: 'Available commands:' },
+                    { type: 'output', text: '  fastfetch    - Display developer profile & system specs' },
+                    { type: 'output', text: '  skills       - List all technical skills by category' },
+                    { type: 'output', text: '  contact      - Print email and social links' },
+                    { type: 'output', text: '  joke         - Get a programmer joke' },
+                    { type: 'output', text: '  clear        - Clear the terminal history' }
+                ];
+                break;
+            case 'clear':
+                setTerminalHistory([]);
+                setTerminalInput('');
+                return;
+            case 'fastfetch':
+            case 'neofetch':
+                response = [
+                    { type: 'output', text: "             .',;::::;,'.                 spidey@expertbook-p3", isCode: true },
+                    { type: 'output', text: "         .';:cccccccccccc:;,.             --------------------", isCode: true },
+                    { type: 'output', text: "      .;cccccccccccccccccccccc;.          OS: Fedora Linux 44 (Workstation Edition) x86_64", isCode: true },
+                    { type: 'output', text: "    .:cccccccccccccccccccccccccc:.        Host: ASUS EXPERTBOOK P3405CVA (1.0)", isCode: true },
+                    { type: 'output', text: "  .;ccccccccccccc;.:dddl:.;ccccccc;.      Kernel: Linux 7.0.9-205.fc44.x86_64", isCode: true },
+                    { type: 'output', text: " .:ccccccccccccc;OWMKOOXMWd;ccccccc:.     Shell: bash 5.3.9", isCode: true },
+                    { type: 'output', text: ".:ccccccccccccc;KMMc;cc;xMMc;ccccccc:.    DE: GNOME 50.1", isCode: true },
+                    { type: 'output', text: ",cccccccccccccc;MMM.;cc;;WW:;cccccccc,    WM: Mutter (Wayland)", isCode: true },
+                    { type: 'output', text: ":cccccccccccccc;MMM.;cccccccccccccccc:    Terminal: Ptyxis 50.1", isCode: true },
+                    { type: 'output', text: ":ccccccc;oxOOOo;MMM000k.;cccccccccccc:    CPU: 13th Gen Intel(R) Core(TM) i5-13420H (12) @ 4.60 GHz", isCode: true },
+                    { type: 'output', text: "cccccc;0MMKxdd:;MMMkddc.;cccccccccccc;    GPU: Intel UHD Graphics [Integrated]", isCode: true },
+                    { type: 'output', text: "ccccc;XMO';cccc;MMM.;cccccccccccccccc'    Memory: 16.00 GiB", isCode: true },
+                    { type: 'output', text: "ccccc;MMo;ccccc;MMW.;ccccccccccccccc;     Mobile: Poco F1 (Daily Driver)", isCode: true },
+                    { type: 'output', text: "ccccc;0MNc.ccc.xMMd;ccccccccccccccc;      Audio: Moto Buds (AirPods)", isCode: true },
+                    { type: 'output', text: "cccccc;dNMWXXXWM0:;cccccccccccccc:,       Locale: en_US.UTF-8", isCode: true },
+                    { type: 'output', text: "cccccccc;.:odl:.;cccccccccccccc:,.        ", isCode: true },
+                    { type: 'output', text: "ccccccccccccccccccccccccccccc:'.          ", isCode: true },
+                    { type: 'output', text: ":ccccccccccccccccccccccc:;,..             ", isCode: true },
+                    { type: 'output', text: " ':cccccccccccccccc::;,.                  ", isCode: true }
+                ];
+                break;
+            case 'skills':
+                response = [
+                    { type: 'output', text: '[ LANGUAGES ]' },
+                    { type: 'output', text: '  • Java (Primary)  • Python  • SQL' },
+                    { type: 'output', text: '' },
+                    { type: 'output', text: '[ BACKEND ]' },
+                    { type: 'output', text: '  • Spring Boot     • Spring Security  • REST APIs' },
+                    { type: 'output', text: '' },
+                    { type: 'output', text: '[ DATABASE ]' },
+                    { type: 'output', text: '  • PostgreSQL      • Spring Data JPA' },
+                    { type: 'output', text: '' },
+                    { type: 'output', text: '[ TOOLS ]' },
+                    { type: 'output', text: '  • Git  • Linux  • IntelliJ  • Postman' },
+                    { type: 'output', text: '' },
+                    { type: 'output', text: '[ CS FUNDAMENTALS ]' },
+                    { type: 'output', text: '  • DSA  • OOP  • OS concepts' },
+                    { type: 'output', text: '' },
+                    { type: 'output', text: '[ CURRENTLY LEARNING ]' },
+                    { type: 'output', text: '  • React  • System Design' }
+                ];
+                break;
+            case 'contact':
+                response = [
+                    { type: 'output', text: 'Email:    aryaprakashraj@gmail.com' },
+                    { type: 'output', text: 'GitHub:   github.com/aryaprakashraj' },
+                    { type: 'output', text: 'LinkedIn: linkedin.com/in/aryaprakashraj' }
+                ];
+                break;
+            case 'joke':
+                const jokes = [
+                    "Why do Java developers wear glasses? Because they don't C#! 🤓",
+                    "There are 10 types of people in the world: those who understand binary, and those who don't.",
+                    "How many programmers does it take to change a light bulb? None, that's a hardware problem.",
+                    "Java is to JavaScript what Car is to Carpet."
+                ];
+                const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+                response = [{ type: 'output', text: randomJoke }];
+                break;
+            case 'sudo rm -rf /':
+                response = [
+                    { type: 'output', text: '[WARNING] Permission denied.' },
+                    { type: 'output', text: 'Nice try, but you can\'t delete this portfolio! 😉' }
+                ];
+                break;
+            default:
+                response = [
+                    { type: 'output', text: `bash: command not found: ${cleanCmd}.` },
+                    { type: 'output', text: 'Type "help" to see a list of valid commands.' }
+                ];
+                break;
+        }
+
+        setTerminalHistory(prev => [
+            ...prev,
+            { type: 'input', text: cmdText },
+            ...response
+        ]);
+        setTerminalInput('');
+    };
 
     useEffect(() => {
         api.get('/api/articles')
@@ -140,33 +260,204 @@ function Home() {
             {/* Skills */}
             <Reveal delay={100}>
                 <section className="py-24 border-t border-zinc-900">
-                    <p className="text-zinc-400 text-sm mb-8 tracking-widest uppercase font-mono flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-royal shadow-[0_0_8px_#305CDE] animate-pulse" />
-                        skills
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {[
-                            { category: "Languages", items: "Java, Python, SQL" },
-                            { category: "Backend", items: "Spring Boot, Spring Security, REST APIs" },
-                            { category: "Database", items: "PostgreSQL, Spring Data JPA" },
-                            { category: "Tools", items: "Git, Linux, IntelliJ, Postman" },
-                            { category: "CS Fundamentals", items: "DSA, OOP, OS concepts" },
-                            { category: "Currently Learning", items: "React, System Design" },
-                        ].map((skill) => (
-                            <SpotlightCard 
-                                key={skill.category}
-                                className="p-5 flex flex-col justify-between"
-                                containerClassName="transition-all duration-300 hover:shadow-[0_0_20px_rgba(48,92,222,0.06)]"
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                        <p className="text-zinc-400 text-sm tracking-widest uppercase font-mono flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-royal shadow-[0_0_8px_#305CDE] animate-pulse" />
+                            skills
+                        </p>
+                        <div className="flex bg-zinc-950/80 p-1 border border-zinc-900 rounded-lg shadow-inner self-start sm:self-auto">
+                            <button
+                                onClick={() => setViewMode('grid')}
+                                className={`px-3 py-1.5 rounded-md text-xs font-mono transition-all duration-300 cursor-pointer ${viewMode === 'grid' ? 'bg-royal text-zinc-50 shadow-md font-medium' : 'text-zinc-500 hover:text-zinc-300'}`}
                             >
-                                <div>
-                                    <span className="inline-block text-[10px] px-2.5 py-0.5 bg-zinc-900/60 border border-zinc-800 rounded font-mono text-zinc-300 mb-3 tracking-wider uppercase group-hover:border-royal/30 group-hover:text-royal transition-all duration-300 select-none">
-                                        {skill.category}
-                                    </span>
-                                    <p className="text-sm text-zinc-100 group-hover:text-zinc-50 transition-colors duration-300 font-medium leading-relaxed">{skill.items}</p>
-                                </div>
-                            </SpotlightCard>
-                        ))}
+                                [ Visual Grid ]
+                            </button>
+                            <button
+                                onClick={() => setViewMode('terminal')}
+                                className={`px-3 py-1.5 rounded-md text-xs font-mono transition-all duration-300 cursor-pointer ${viewMode === 'terminal' ? 'bg-royal text-zinc-50 shadow-md font-medium' : 'text-zinc-500 hover:text-zinc-300'}`}
+                            >
+                                [ Interactive CLI ]
+                            </button>
+                        </div>
                     </div>
+
+                    {viewMode === 'terminal' ? (
+                        <div className="border border-zinc-850 rounded-xl overflow-hidden shadow-[0_0_35px_rgba(48,92,222,0.04)] bg-zinc-950/90 backdrop-blur-md">
+                            {/* Terminal Header */}
+                            <div className="flex items-center justify-between px-4 py-3 bg-zinc-900/50 border-b border-zinc-900 select-none">
+                                <div className="flex items-center gap-2">
+                                    <span className="w-3 h-3 rounded-full bg-rose-500/80" />
+                                    <span className="w-3 h-3 rounded-full bg-amber-500/80" />
+                                    <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                                </div>
+                                <span className="text-[11px] text-zinc-500 font-mono">guest@aryaprakashraj:~</span>
+                                <div className="w-12" /> {/* spacer */}
+                            </div>
+
+                            {/* Terminal Content */}
+                            <div 
+                                ref={terminalBodyRef}
+                                className="p-5 h-[320px] overflow-y-auto font-mono text-sm leading-relaxed text-zinc-300 scrollbar-thin scrollbar-thumb-zinc-800"
+                            >
+                                {terminalHistory.map((item, idx) => (
+                                    <div key={idx} className="mb-2">
+                                        {item.type === 'input' ? (
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-royal font-bold select-none">guest@aryaprakashraj:~$</span>
+                                                <span className="text-zinc-100 font-semibold">{item.text}</span>
+                                            </div>
+                                        ) : (
+                                            <div className={`whitespace-pre-wrap ${item.isCode ? 'text-zinc-400 leading-tight font-semibold text-xs' : 'text-zinc-300'}`}>
+                                                {item.text}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                                <div ref={terminalEndRef} />
+                            </div>
+
+                            {/* Terminal Input Bar */}
+                            <div className="p-4 bg-zinc-950/95 border-t border-zinc-900">
+                                <form onSubmit={(e) => {
+                                    e.preventDefault();
+                                    handleTerminalCommand(terminalInput);
+                                }} className="flex items-center gap-2">
+                                    <span className="text-royal font-bold select-none font-mono">guest@aryaprakashraj:~$</span>
+                                    <input 
+                                        type="text" 
+                                        value={terminalInput}
+                                        onChange={(e) => setTerminalInput(e.target.value)}
+                                        className="flex-1 bg-transparent text-zinc-100 font-mono focus:outline-none caret-royal placeholder-zinc-700 text-sm"
+                                        placeholder="type 'help' or click a suggestion..."
+                                        autoComplete="off"
+                                        autoCorrect="off"
+                                        autoCapitalize="off"
+                                        spellCheck="false"
+                                    />
+                                </form>
+                            </div>
+
+                            {/* Interactive Suggestion Chips */}
+                            <div className="px-4 pb-4 pt-1 bg-zinc-950/95 flex flex-wrap gap-2 items-center">
+                                <span className="text-[10px] text-zinc-600 uppercase tracking-wider font-mono mr-1">Suggestions:</span>
+                                {['fastfetch', 'skills', 'contact', 'joke', 'clear'].map((cmd) => (
+                                    <button
+                                        key={cmd}
+                                        onClick={() => handleTerminalCommand(cmd)}
+                                        className="text-xs px-2.5 py-1 bg-zinc-900/50 hover:bg-royal/10 border border-zinc-850 hover:border-royal/30 text-zinc-400 hover:text-royal rounded-md transition-all duration-300 font-mono cursor-pointer"
+                                    >
+                                        {cmd}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {[
+                                { 
+                                    category: "Languages", 
+                                    icon: (
+                                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <polyline points="16 18 22 12 16 6" />
+                                            <polyline points="8 6 2 12 8 18" />
+                                        </svg>
+                                    ),
+                                    items: ["Java", "Python", "SQL"] 
+                                },
+                                { 
+                                    category: "Backend", 
+                                    icon: (
+                                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+                                            <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+                                            <line x1="6" y1="6" x2="6.01" y2="6" />
+                                            <line x1="6" y1="18" x2="6.01" y2="18" />
+                                            <line x1="10" y1="6" x2="10.01" y2="6" />
+                                            <line x1="10" y1="18" x2="10.01" y2="18" />
+                                        </svg>
+                                    ),
+                                    items: ["Spring Boot", "Spring Security", "REST APIs"] 
+                                },
+                                { 
+                                    category: "Database", 
+                                    icon: (
+                                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <ellipse cx="12" cy="5" rx="9" ry="3" />
+                                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                                            <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
+                                        </svg>
+                                    ),
+                                    items: ["PostgreSQL", "Spring Data JPA"] 
+                                },
+                                { 
+                                    category: "Tools", 
+                                    icon: (
+                                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <polyline points="4 17 10 11 4 5" />
+                                            <line x1="12" y1="19" x2="20" y2="19" />
+                                        </svg>
+                                    ),
+                                    items: ["Git", "Linux", "IntelliJ", "Postman"] 
+                                },
+                                { 
+                                    category: "CS Fundamentals", 
+                                    icon: (
+                                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <rect x="4" y="4" width="16" height="16" rx="2" />
+                                            <rect x="9" y="9" width="6" height="6" />
+                                            <line x1="9" y1="1" x2="9" y2="4" />
+                                            <line x1="15" y1="1" x2="15" y2="4" />
+                                            <line x1="9" y1="20" x2="9" y2="23" />
+                                            <line x1="15" y1="20" x2="15" y2="23" />
+                                            <line x1="20" y1="9" x2="23" y2="9" />
+                                            <line x1="20" y1="15" x2="23" y2="15" />
+                                            <line x1="1" y1="9" x2="4" y2="9" />
+                                            <line x1="1" y1="15" x2="4" y2="15" />
+                                        </svg>
+                                    ),
+                                    items: ["DSA", "OOP", "OS concepts"] 
+                                },
+                                { 
+                                    category: "Currently Learning", 
+                                    icon: (
+                                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5.5 5.5 0 0 0 12 2.5 5.5 5.5 0 0 0 6.5 8c0 1 .5 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+                                            <path d="M9 18h6" />
+                                            <path d="M10 22h4" />
+                                        </svg>
+                                    ),
+                                    items: ["React", "System Design"] 
+                                },
+                            ].map((skill) => (
+                                <SpotlightCard 
+                                    key={skill.category}
+                                    className="p-5 flex flex-col justify-between"
+                                    containerClassName="transition-all duration-300 hover:shadow-[0_0_20px_rgba(48,92,222,0.06)]"
+                                >
+                                    <div>
+                                        <div className="flex items-center justify-between mb-4">
+                                            <span className="inline-block text-[10px] px-2.5 py-0.5 bg-zinc-900/60 border border-zinc-800 rounded font-mono text-zinc-300 tracking-wider uppercase group-hover:border-royal/30 group-hover:text-royal transition-all duration-300 select-none">
+                                                {skill.category}
+                                            </span>
+                                            <div className="p-1.5 rounded-lg bg-zinc-900/40 border border-zinc-850 group-hover:border-royal/20 group-hover:bg-royal/5 transition-all duration-300 text-zinc-400 group-hover:text-royal shadow-inner">
+                                                {skill.icon}
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-wrap gap-1.5">
+                                            {skill.items.map((item) => (
+                                                <span 
+                                                    key={item} 
+                                                    className="text-xs px-2.5 py-1 bg-zinc-900/20 hover:bg-zinc-900/70 border border-zinc-850 hover:border-royal/30 text-zinc-300 hover:text-zinc-100 rounded-md transition-all duration-300 select-none font-mono hover:scale-[1.02] hover:-translate-y-0.5"
+                                                >
+                                                    {item}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </SpotlightCard>
+                            ))}
+                        </div>
+                    )}
                 </section>
             </Reveal>
 
