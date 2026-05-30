@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-function Navbar() {
+function Navbar({ isTerminalMode, setIsTerminalMode }) {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [activeSection, setActiveSection] = useState('home')
   const location = useLocation()
@@ -20,7 +20,10 @@ function Navbar() {
   // Scroll Spy for Home page sections
   useEffect(() => {
     if (location.pathname !== '/') {
-      setActiveSection('')
+      if (activeSection !== '') {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setActiveSection('')
+      }
       return
     }
 
@@ -103,8 +106,8 @@ function Navbar() {
         Arya<span className="font-mono text-royal group-hover:text-[#4d75ec] transition-colors duration-300">.dev</span>
       </Link>
       
-      <div className="flex items-center gap-8">
-        <div className="flex gap-8 text-sm font-medium">
+      <div className="flex items-center gap-6">
+        <div className="flex gap-6 text-sm font-medium items-center">
           {navLinks.map((link) => {
             const active = isLinkActive(link)
             return (
@@ -121,6 +124,20 @@ function Navbar() {
             )
           })}
         </div>
+
+        {/* CLI Mode Toggle Button */}
+        <button 
+          onClick={() => setIsTerminalMode(!isTerminalMode)}
+          className={`px-3 py-1.5 rounded-lg border font-mono text-xs cursor-pointer transition-all duration-300 flex items-center gap-1.5 shadow-sm ${
+            isTerminalMode 
+              ? 'bg-royal border-royal text-zinc-50 hover:bg-[#4d75ec]' 
+              : 'bg-zinc-950/40 border-zinc-800 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700'
+          }`}
+          aria-label="Toggle Developer Console"
+        >
+          <span className={`w-1.5 h-1.5 rounded-full ${isTerminalMode ? 'bg-zinc-100 animate-pulse' : 'bg-zinc-600'}`} />
+          {isTerminalMode ? 'CLI Mode: ON' : 'CLI Mode'}
+        </button>
       </div>
     </nav>
   )

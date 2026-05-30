@@ -11,11 +11,7 @@ function Admin() {
   const [form, setForm] = useState({ title: '', content: '', status: 'DRAFT' })
   const [error, setError] = useState('')
 
-  useEffect(() => {
-    if (token) fetchArticles()
-  }, [token])
-
-  const fetchArticles = () => {
+  function fetchArticles() {
     api.get('/api/articles/all', {
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -23,7 +19,12 @@ function Admin() {
       .catch(() => logout())
   }
 
-  const login = async () => {
+  useEffect(() => {
+    if (token) fetchArticles()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token])
+
+  async function login() {
     try {
       const res = await api.post('/api/auth/login', { username, password })
       localStorage.setItem('adminToken', res.data.token)
@@ -34,33 +35,33 @@ function Admin() {
     }
   }
 
-  const logout = () => {
+  function logout() {
     localStorage.removeItem('adminToken')
     setToken(null)
   }
 
-const saveArticle = async (status) => {
-  try {
-    const payload = { ...form, status }
-    if (selected) {
-      await api.put(`/api/articles/${selected.id}`, payload, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-    } else {
-      await api.post('/api/articles', payload, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+  async function saveArticle(status) {
+    try {
+      const payload = { ...form, status }
+      if (selected) {
+        await api.put(`/api/articles/${selected.id}`, payload, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+      } else {
+        await api.post('/api/articles', payload, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+      }
+      setView('list')
+      setSelected(null)
+      setForm({ title: '', content: '', status: 'DRAFT' })
+      fetchArticles()
+    } catch {
+      setError('Failed to save')
     }
-    setView('list')
-    setSelected(null)
-    setForm({ title: '', content: '', status: 'DRAFT' })
-    fetchArticles()
-  } catch {
-    setError('Failed to save')
   }
-}
 
-  const deleteArticle = async (id) => {
+  async function deleteArticle(id) {
     if (!confirm('Delete this article?')) return
     await api.delete(`/api/articles/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
@@ -68,7 +69,7 @@ const saveArticle = async (status) => {
     fetchArticles()
   }
 
-  const startEdit = (article) => {
+  function startEdit(article) {
     setSelected(article)
     setForm({ title: article.title, content: article.content, status: article.status })
     setView('edit')
