@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
 import api from '../api/axios'
 
 function FullTerminalConsole({ setIsTerminalMode }) {
-    const navigate = useNavigate()
     const [terminalInput, setTerminalInput] = useState('')
     const [articles, setArticles] = useState([])
     const [isStreaming, setIsStreaming] = useState(false)
@@ -11,13 +9,16 @@ function FullTerminalConsole({ setIsTerminalMode }) {
 
     const terminalBodyRef = useRef(null)
     const terminalEndRef = useRef(null)
+    const inputRef = useRef(null)
 
     // Stream line-by-line writer helper
-    const appendWithStream = (inputLine, outputLines) => {
+    const appendWithStream = (inputLine, outputLines, skipInputLine = false) => {
         setIsStreaming(true)
         
         // 1. Immediately print prompt and input line
-        setTerminalHistory(prev => [...prev, { type: 'input', text: inputLine }])
+        if (!skipInputLine) {
+            setTerminalHistory(prev => [...prev, { type: 'input', text: inputLine }])
+        }
 
         // 2. Progressively queue other lines
         let index = 0
@@ -38,11 +39,12 @@ function FullTerminalConsole({ setIsTerminalMode }) {
     // SSH shell boot effect
     useEffect(() => {
         const welcomeLines = [
-            { type: 'output', text: '  ____   ___  ____ _____ _____ ___  _     ___ ___  ', isCode: true },
-            { type: 'output', text: ' |  _ \\\\ / _ \\\\|  _ \\\\_   _|  ___/ _ \\\\| |   |_ _/ _ \\\\ ', isCode: true },
-            { type: 'output', text: ' | |_) | | | | |_) || | | |_ | | | | |    | | | | |', isCode: true },
-            { type: 'output', text: ' |  __/| |_| |  _ < | | |  _|| |_| | |___ | | |_| |', isCode: true },
-            { type: 'output', text: ' |_|    \\\\___/|_| \\\\_\\\\|_| |_|   \\\\___/|_____|___\\\\___/ ', isCode: true },
+            { type: 'output', text: '  ██████╗  ██████╗ ██████╗ ████████╗███████╗ ██████╗ ██╗     ██╗ ██████╗  ', isCode: true },
+            { type: 'output', text: '  ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗██║     ██║██╔═══██╗ ', isCode: true },
+            { type: 'output', text: '  ██████╔╝██║   ██║██████╔╝   ██║   █████╗  ██║   ██║██║     ██║██║   ██║ ', isCode: true },
+            { type: 'output', text: '  ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝  ██║   ██║██║     ██║██║   ██║ ', isCode: true },
+            { type: 'output', text: '  ██║     ╚██████╔╝██║  ██║   ██║   ██║     ╚██████╔╝███████╗██║╚██████╔╝ ', isCode: true },
+            { type: 'output', text: '  ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝  ', isCode: true },
             { type: 'output', text: '' },
             { type: 'output', text: 'Connecting to guest@aryaprakashraj...' },
             { type: 'output', text: 'Connection established successfully.' },
@@ -110,8 +112,73 @@ function FullTerminalConsole({ setIsTerminalMode }) {
             const num = parseInt(cleanCmd.split(' ').pop());
             if (num > 0 && num <= articles.length) {
                 const art = articles[num - 1];
-                setIsTerminalMode(false);
-                navigate(`/blog/${art.id}`);
+                
+                // Print loading line instantly
+                setTerminalHistory(prev => [
+                    ...prev, 
+                    { type: 'input', text: cmdText },
+                    { type: 'output', text: `Connecting to database and fetching "${art.title}"...` }
+                ]);
+                setIsStreaming(true);
+
+                api.get(`/api/articles/${art.id}`)
+                    .then(res => {
+                        const fullArt = res.data;
+                        const dateStr = new Date(fullArt.createdAt).toLocaleDateString('en-US', {
+                            month: 'long', day: 'numeric', year: 'numeric'
+                        });
+                        
+                        const separator = '='.repeat(80);
+                        const articleLines = [
+                            { type: 'output', text: '' },
+                            { type: 'output', text: separator, isCode: true },
+                            { type: 'output', text: `ARTICLE: ${fullArt.title.toUpperCase()}`, isCode: false },
+                            { type: 'output', text: `Published: ${dateStr}  |  Views: ${fullArt.viewCount || 0}`, isCode: false },
+                            { type: 'output', text: separator, isCode: true },
+                            { type: 'output', text: '' },
+                            ...fullArt.content.split('\n').map(line => ({ type: 'output', text: line })),
+                            { type: 'output', text: '' },
+                            { type: 'output', text: separator, isCode: true },
+                            { type: 'output', text: '* Run "blog" to see other recent articles.' },
+                            { type: 'output', text: '' }
+                        ];
+                        
+                        setIsStreaming(false);
+                        appendWithStream(cmdText, articleLines, true);
+                    })
+                    .catch(() => {
+                        // Fallback rich local mock contents
+                        const mockContents = {
+                            1: "In this article, we deep-dive into the Spring Security Authentication Flow.\nWe examine how UsernamePasswordAuthenticationFilter works, the role of the AuthenticationManager, and how security context is set up in a thread-local SecurityContextHolder.\n\nKey Concepts:\n1. SecurityContextHolder - holds authentication details.\n2. AuthenticationManager - resolves authentication.\n3. UserDetailsService - loads user-specific data.",
+                            2: "Hibernate JPA One-to-Many mapping can be tricky. If not careful, you might encounter the notorious N+1 query problem.\nIn this guide, we discuss how to use 'join fetch' or EntityGraphs to optimize relational queries and map collections correctly using mappedBy.\n\nTips:\n- Always use lazy loading for collections.\n- Keep both sides of the relationship in sync using helper methods.",
+                            3: "Why Linux? For developers, Linux provides a superior terminal ecosystem, fine-grained control over system processes, package management tools (like dnf, apt), and native performance for hosting backend servers.\n\nMy setup:\n- Fedora Workstation with Gnome 50.\n- Ptyxis and Alacritty as primary shell interfaces.\n- Docker containers for database local environments."
+                        };
+                        
+                        const content = mockContents[art.id] || "This is a placeholder content for the article. The local developer backend is offline, but we retrieved this mock post successfully!";
+                        const dateStr = new Date(art.createdAt).toLocaleDateString('en-US', {
+                            month: 'long', day: 'numeric', year: 'numeric'
+                        });
+                        
+                        const separator = '='.repeat(80);
+                        const articleLines = [
+                            { type: 'output', text: '' },
+                            { type: 'output', text: separator, isCode: true },
+                            { type: 'output', text: `ARTICLE: ${art.title.toUpperCase()}`, isCode: false },
+                            { type: 'output', text: `Published: ${dateStr}  |  Views: ${art.viewCount || 120}`, isCode: false },
+                            { type: 'output', text: separator, isCode: true },
+                            { type: 'output', text: '' },
+                            ...content.split('\n').map(line => ({ type: 'output', text: line })),
+                            { type: 'output', text: '' },
+                            { type: 'output', text: separator, isCode: true },
+                            { type: 'output', text: '* Run "blog" to see other recent articles.' },
+                            { type: 'output', text: '' }
+                        ];
+                        
+                        setIsStreaming(false);
+                        appendWithStream(cmdText, articleLines, true);
+                    });
+                
+                setTerminalInput('');
                 return;
             } else {
                 response = [{ type: 'output', text: `Error: Article [${num}] not found.` }];
@@ -259,7 +326,7 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                         text: `  [${idx + 1}] ${art.title} (${new Date(art.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })})`
                     })),
                     { type: 'output', text: '' },
-                    { type: 'output', text: '* Type "read <number>" to navigate to and read the article!' }
+                    { type: 'output', text: '* Type "read <number>" to read the article directly in this terminal!' }
                 ];
                 break;
             case 'contact':
@@ -301,14 +368,35 @@ function FullTerminalConsole({ setIsTerminalMode }) {
         setTerminalInput('');
     };
 
+    // Auto-focus input when streaming completes or window gains focus
+    useEffect(() => {
+        if (!isStreaming && inputRef.current) {
+            inputRef.current.focus()
+        }
+    }, [isStreaming])
+
+    useEffect(() => {
+        const handleWindowFocus = () => {
+            if (!isStreaming && inputRef.current) {
+                inputRef.current.focus()
+            }
+        }
+        window.addEventListener('focus', handleWindowFocus)
+        return () => window.removeEventListener('focus', handleWindowFocus)
+    }, [isStreaming])
+
     const handleViewportClick = () => {
-        const inputEl = document.querySelector('input[type="text"]')
-        if (inputEl) inputEl.focus()
+        if (inputRef.current) {
+            inputRef.current.focus()
+        }
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
         handleTerminalCommand(terminalInput)
+        if (inputRef.current) {
+            inputRef.current.focus()
+        }
     }
 
     return (
@@ -356,6 +444,7 @@ function FullTerminalConsole({ setIsTerminalMode }) {
             >
                 <span className="text-royal font-bold select-none font-mono">guest@aryaprakashraj:~$</span>
                 <input 
+                    ref={inputRef}
                     type="text" 
                     value={terminalInput}
                     onChange={(e) => setTerminalInput(e.target.value)}

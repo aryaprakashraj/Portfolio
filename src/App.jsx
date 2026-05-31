@@ -10,12 +10,12 @@ import FullTerminalConsole from './components/FullTerminalConsole'
 
 function App() {
   const [isTerminalMode, setIsTerminalMode] = useState(() => {
-    return localStorage.getItem('isTerminalMode') === 'true'
+    // Land on terminal mode by default if visiting the root route "/"
+    return window.location.pathname === '/'
   })
 
   const handleSetTerminalMode = (val) => {
     setIsTerminalMode(val)
-    localStorage.setItem('isTerminalMode', val)
   }
 
   return (
