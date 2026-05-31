@@ -151,18 +151,18 @@ function Home() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {[
-                            { 
-                                category: "Languages", 
+                            {
+                                category: "Languages",
                                 icon: (
                                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                         <polyline points="16 18 22 12 16 6" />
                                         <polyline points="8 6 2 12 8 18" />
                                     </svg>
                                 ),
-                                items: ["Java", "Python", "SQL"] 
+                                items: ["Java", "Python", "SQL"]
                             },
-                            { 
-                                category: "Backend", 
+                            {
+                                category: "Backend",
                                 icon: (
                                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                         <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
@@ -173,10 +173,10 @@ function Home() {
                                         <line x1="10" y1="18" x2="10.01" y2="18" />
                                     </svg>
                                 ),
-                                items: ["Spring Boot", "Spring Security", "REST APIs"] 
+                                items: ["Spring Boot", "Spring Security", "REST APIs"]
                             },
-                            { 
-                                category: "Database", 
+                            {
+                                category: "Database",
                                 icon: (
                                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                         <ellipse cx="12" cy="5" rx="9" ry="3" />
@@ -184,20 +184,20 @@ function Home() {
                                         <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
                                     </svg>
                                 ),
-                                items: ["PostgreSQL", "Spring Data JPA"] 
+                                items: ["PostgreSQL", "Spring Data JPA"]
                             },
-                            { 
-                                category: "Tools", 
+                            {
+                                category: "Tools",
                                 icon: (
                                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                         <polyline points="4 17 10 11 4 5" />
                                         <line x1="12" y1="19" x2="20" y2="19" />
                                     </svg>
                                 ),
-                                items: ["Git", "Linux", "IntelliJ", "Postman"] 
+                                items: ["Git", "Linux", "IntelliJ", "Postman"]
                             },
-                            { 
-                                category: "CS Fundamentals", 
+                            {
+                                category: "CS Fundamentals",
                                 icon: (
                                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                         <rect x="4" y="4" width="16" height="16" rx="2" />
@@ -212,10 +212,10 @@ function Home() {
                                         <line x1="1" y1="15" x2="4" y2="15" />
                                     </svg>
                                 ),
-                                items: ["DSA", "OOP", "OS concepts"] 
+                                items: ["DSA", "OOP", "OS concepts"]
                             },
-                            { 
-                                category: "Currently Learning", 
+                            {
+                                category: "Currently Learning",
                                 icon: (
                                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                         <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5.5 5.5 0 0 0 12 2.5 5.5 5.5 0 0 0 6.5 8c0 1 .5 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
@@ -223,10 +223,10 @@ function Home() {
                                         <path d="M10 22h4" />
                                     </svg>
                                 ),
-                                items: ["React", "System Design"] 
+                                items: ["React", "System Design"]
                             },
                         ].map((skill) => (
-                            <SpotlightCard 
+                            <SpotlightCard
                                 key={skill.category}
                                 className="p-5 flex flex-col justify-between"
                                 containerClassName="transition-all duration-300 hover:shadow-[0_0_20px_rgba(48,92,222,0.06)]"
@@ -242,8 +242,8 @@ function Home() {
                                     </div>
                                     <div className="flex flex-wrap gap-1.5">
                                         {skill.items.map((item) => (
-                                            <span 
-                                                key={item} 
+                                            <span
+                                                key={item}
                                                 className="text-xs px-2.5 py-1 bg-zinc-900/20 hover:bg-zinc-900/70 border border-zinc-850 hover:border-royal/30 text-zinc-300 hover:text-zinc-100 rounded-md transition-all duration-300 select-none font-mono hover:scale-[1.02] hover:-translate-y-0.5"
                                             >
                                                 {item}
@@ -269,8 +269,13 @@ function Home() {
                             {
                                 name: "Personal Blog",
                                 desc: "Full-stack personal site with Spring Boot REST API, JWT auth, PostgreSQL, and React frontend.",
-                                tags: ["Spring Boot", "React", "PostgreSQL", "JWT"],
+                                tags: ["Spring Boot", "PostgreSQL", "JWT", "Docker"],
                                 link: "https://github.com/aryaprakashraj/Blog"
+                            }, {
+                                name: "Portfolio",
+                                desc: "Personal portfolio with interactive CLI interface and a live full-stack blog.",
+                                tags: ["React", "Vite", "Tailwind"],
+                                link: "https://github.com/aryaprakashraj/Portfolio"
                             },
                             {
                                 name: "Next Leap",

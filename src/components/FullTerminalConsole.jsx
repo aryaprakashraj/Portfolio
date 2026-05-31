@@ -14,7 +14,7 @@ function FullTerminalConsole({ setIsTerminalMode }) {
     // Stream line-by-line writer helper
     const appendWithStream = (inputLine, outputLines, skipInputLine = false) => {
         setIsStreaming(true)
-        
+
         // 1. Immediately print prompt and input line
         if (!skipInputLine) {
             setTerminalHistory(prev => [...prev, { type: 'input', text: inputLine }])
@@ -112,10 +112,10 @@ function FullTerminalConsole({ setIsTerminalMode }) {
             const num = parseInt(cleanCmd.split(' ').pop());
             if (num > 0 && num <= articles.length) {
                 const art = articles[num - 1];
-                
+
                 // Print loading line instantly
                 setTerminalHistory(prev => [
-                    ...prev, 
+                    ...prev,
                     { type: 'input', text: cmdText },
                     { type: 'output', text: `Connecting to database and fetching "${art.title}"...` }
                 ]);
@@ -127,7 +127,7 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                         const dateStr = new Date(fullArt.createdAt).toLocaleDateString('en-US', {
                             month: 'long', day: 'numeric', year: 'numeric'
                         });
-                        
+
                         const separator = '='.repeat(80);
                         const articleLines = [
                             { type: 'output', text: '' },
@@ -142,7 +142,7 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                             { type: 'output', text: '* Run "blog" to see other recent articles.' },
                             { type: 'output', text: '' }
                         ];
-                        
+
                         setIsStreaming(false);
                         appendWithStream(cmdText, articleLines, true);
                     })
@@ -153,12 +153,12 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                             2: "Hibernate JPA One-to-Many mapping can be tricky. If not careful, you might encounter the notorious N+1 query problem.\nIn this guide, we discuss how to use 'join fetch' or EntityGraphs to optimize relational queries and map collections correctly using mappedBy.\n\nTips:\n- Always use lazy loading for collections.\n- Keep both sides of the relationship in sync using helper methods.",
                             3: "Why Linux? For developers, Linux provides a superior terminal ecosystem, fine-grained control over system processes, package management tools (like dnf, apt), and native performance for hosting backend servers.\n\nMy setup:\n- Fedora Workstation with Gnome 50.\n- Ptyxis and Alacritty as primary shell interfaces.\n- Docker containers for database local environments."
                         };
-                        
+
                         const content = mockContents[art.id] || "This is a placeholder content for the article. The local developer backend is offline, but we retrieved this mock post successfully!";
                         const dateStr = new Date(art.createdAt).toLocaleDateString('en-US', {
                             month: 'long', day: 'numeric', year: 'numeric'
                         });
-                        
+
                         const separator = '='.repeat(80);
                         const articleLines = [
                             { type: 'output', text: '' },
@@ -173,11 +173,11 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                             { type: 'output', text: '* Run "blog" to see other recent articles.' },
                             { type: 'output', text: '' }
                         ];
-                        
+
                         setIsStreaming(false);
                         appendWithStream(cmdText, articleLines, true);
                     });
-                
+
                 setTerminalInput('');
                 return;
             } else {
@@ -195,8 +195,15 @@ function FullTerminalConsole({ setIsTerminalMode }) {
             setTerminalInput('');
             return;
         }
-
         if (cleanCmd === 'projects --open 2' || cleanCmd === 'open 2') {
+            window.open('https://github.com/aryaprakashraj/Portfolio', '_blank');
+            response = [{ type: 'output', text: 'Opening GitHub repo for Portfolio...' }];
+            appendWithStream(cmdText, response);
+            setTerminalInput('');
+            return;
+        }
+
+        if (cleanCmd === 'projects --open 3' || cleanCmd === 'open 3') {
             window.open('https://github.com/aryaprakashraj/NextLeap', '_blank');
             response = [{ type: 'output', text: 'Opening GitHub repo for Next Leap...' }];
             appendWithStream(cmdText, response);
@@ -306,12 +313,18 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                     { type: 'output', text: '  - Tech Stack:  Spring Boot, React, PostgreSQL, JWT' },
                     { type: 'output', text: '  - Source:      https://github.com/aryaprakashraj/Blog' },
                     { type: 'output', text: '' },
-                    { type: 'output', text: '[ 2. NEXT LEAP ]' },
+                    { type: 'output', text: '[ 2. PORTFOLIO + BLOG PLATFORM ]' },
+                    { type: 'output', text: '  - Description: Personal portfolio with interactive CLI interface and a live full-stack blog.' },
+                    { type: 'output', text: '  - Tech Stack:  React, Vite, Tailwind, Spring Boot, PostgreSQL, Docker' },
+                    { type: 'output', text: '  - Live:        https://aryaprakashraj.vercel.app' },
+                    { type: 'output', text: '  - Source:      https://github.com/aryaprakashraj/Portfolio' },
+                    { type: 'output', text: '' },
+                    { type: 'output', text: '[ 3. NEXT LEAP ]' },
                     { type: 'output', text: '  - Description: Career path recommendation system with Spring Boot backend.' },
                     { type: 'output', text: '  - Tech Stack:  Spring Boot, Java' },
                     { type: 'output', text: '  - Source:      https://github.com/aryaprakashraj/NextLeap' },
                     { type: 'output', text: '' },
-                    { type: 'output', text: '[ 3. TOPPER FRIEND ]' },
+                    { type: 'output', text: '[ 4. TOPPER FRIEND ]' },
                     { type: 'output', text: '  - Description: Adaptive tuning AI chatbot for student learning.' },
                     { type: 'output', text: '  - Tech Stack:  Python' },
                     { type: 'output', text: '' },
@@ -400,7 +413,7 @@ function FullTerminalConsole({ setIsTerminalMode }) {
     }
 
     return (
-        <div 
+        <div
             onClick={handleViewportClick}
             className="fixed inset-0 w-screen h-screen bg-zinc-950 text-zinc-300 font-mono flex flex-col z-[9999] overflow-hidden select-text cursor-text"
         >
@@ -416,7 +429,7 @@ function FullTerminalConsole({ setIsTerminalMode }) {
             </div>
 
             {/* Terminal Viewport */}
-            <div 
+            <div
                 ref={terminalBodyRef}
                 className="flex-1 p-6 overflow-y-auto font-mono text-sm leading-relaxed text-zinc-300 scrollbar-thin scrollbar-thumb-zinc-800"
             >
@@ -438,14 +451,14 @@ function FullTerminalConsole({ setIsTerminalMode }) {
             </div>
 
             {/* Input Bar wrapped in form */}
-            <form 
+            <form
                 onSubmit={handleSubmit}
                 className="p-4 bg-zinc-950 border-t border-zinc-900 flex items-center gap-2"
             >
                 <span className="text-royal font-bold select-none font-mono">guest@aryaprakashraj:~$</span>
-                <input 
+                <input
                     ref={inputRef}
-                    type="text" 
+                    type="text"
                     value={terminalInput}
                     onChange={(e) => setTerminalInput(e.target.value)}
                     disabled={isStreaming}
