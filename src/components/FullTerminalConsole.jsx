@@ -11,6 +11,16 @@ function FullTerminalConsole({ setIsTerminalMode }) {
     const terminalEndRef = useRef(null)
     const inputRef = useRef(null)
 
+    const [isMobile, setIsMobile] = useState(false)
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768)
+        checkMobile()
+        window.addEventListener('resize', checkMobile)
+        return () => window.removeEventListener('resize', checkMobile)
+    }, [])
+
+    const promptLabel = isMobile ? 'guest:~$' : 'guest@aryaprakashraj:~$'
+
     // Stream line-by-line writer helper
     const appendWithStream = (inputLine, outputLines, skipInputLine = false) => {
         setIsStreaming(true)
@@ -195,15 +205,8 @@ function FullTerminalConsole({ setIsTerminalMode }) {
             setTerminalInput('');
             return;
         }
-        if (cleanCmd === 'projects --open 2' || cleanCmd === 'open 2') {
-            window.open('https://github.com/aryaprakashraj/Portfolio', '_blank');
-            response = [{ type: 'output', text: 'Opening GitHub repo for Portfolio...' }];
-            appendWithStream(cmdText, response);
-            setTerminalInput('');
-            return;
-        }
 
-        if (cleanCmd === 'projects --open 3' || cleanCmd === 'open 3') {
+        if (cleanCmd === 'projects --open 2' || cleanCmd === 'open 2') {
             window.open('https://github.com/aryaprakashraj/NextLeap', '_blank');
             response = [{ type: 'output', text: 'Opening GitHub repo for Next Leap...' }];
             appendWithStream(cmdText, response);
@@ -309,22 +312,16 @@ function FullTerminalConsole({ setIsTerminalMode }) {
             case 'projects':
                 response = [
                     { type: 'output', text: '[ 1. PERSONAL BLOG ]' },
-                    { type: 'output', text: '  - Description: Full-stack blogging system with Spring Boot REST API, JWT auth, and React.' },
+                    { type: 'output', text: '  - Description: Full-stack portfolio site with Spring Boot REST API, JWT auth, and React.' },
                     { type: 'output', text: '  - Tech Stack:  Spring Boot, React, PostgreSQL, JWT' },
                     { type: 'output', text: '  - Source:      https://github.com/aryaprakashraj/Blog' },
                     { type: 'output', text: '' },
-                    { type: 'output', text: '[ 2. PORTFOLIO + BLOG PLATFORM ]' },
-                    { type: 'output', text: '  - Description: Personal portfolio with interactive CLI interface and a live full-stack blog.' },
-                    { type: 'output', text: '  - Tech Stack:  React, Vite, Tailwind, Spring Boot, PostgreSQL, Docker' },
-                    { type: 'output', text: '  - Live:        https://aryaprakashraj.vercel.app' },
-                    { type: 'output', text: '  - Source:      https://github.com/aryaprakashraj/Portfolio' },
-                    { type: 'output', text: '' },
-                    { type: 'output', text: '[ 3. NEXT LEAP ]' },
+                    { type: 'output', text: '[ 2. NEXT LEAP ]' },
                     { type: 'output', text: '  - Description: Career path recommendation system with Spring Boot backend.' },
                     { type: 'output', text: '  - Tech Stack:  Spring Boot, Java' },
                     { type: 'output', text: '  - Source:      https://github.com/aryaprakashraj/NextLeap' },
                     { type: 'output', text: '' },
-                    { type: 'output', text: '[ 4. TOPPER FRIEND ]' },
+                    { type: 'output', text: '[ 3. TOPPER FRIEND ]' },
                     { type: 'output', text: '  - Description: Adaptive tuning AI chatbot for student learning.' },
                     { type: 'output', text: '  - Tech Stack:  Python' },
                     { type: 'output', text: '' },
@@ -415,7 +412,7 @@ function FullTerminalConsole({ setIsTerminalMode }) {
     return (
         <div
             onClick={handleViewportClick}
-            className="fixed inset-0 w-screen h-screen bg-zinc-950 text-zinc-300 font-mono flex flex-col z-[9999] overflow-hidden select-text cursor-text"
+            className="fixed inset-0 w-screen h-[100dvh] bg-zinc-950 text-zinc-300 font-mono flex flex-col z-[9999] overflow-hidden select-text cursor-text"
         >
             {/* Terminal Top Window Bar */}
             <div className="flex items-center justify-between px-4 py-2 bg-zinc-900/80 border-b border-zinc-900 select-none">
@@ -424,24 +421,29 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                     <span className="w-3 h-3 rounded-full bg-amber-500/80" />
                     <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
                 </div>
-                <span className="text-xs text-zinc-500 font-mono">guest@aryaprakashraj:~</span>
+                <span className="text-xs text-zinc-500 font-mono">{isMobile ? 'guest:~' : 'guest@aryaprakashraj:~'}</span>
                 <div className="w-12" /> {/* spacer */}
             </div>
 
             {/* Terminal Viewport */}
             <div
                 ref={terminalBodyRef}
-                className="flex-1 p-6 overflow-y-auto font-mono text-sm leading-relaxed text-zinc-300 scrollbar-thin scrollbar-thumb-zinc-800"
+                className="flex-1 p-4 sm:p-6 overflow-y-auto font-mono text-xs sm:text-sm leading-relaxed text-zinc-300 scrollbar-thin scrollbar-thumb-zinc-800"
             >
                 {terminalHistory.map((item, idx) => (
                     <div key={idx} className="mb-2">
                         {item.type === 'input' ? (
                             <div className="flex items-center gap-2">
-                                <span className="text-royal font-bold select-none">guest@aryaprakashraj:~$</span>
+                                <span className="text-royal font-bold select-none">{promptLabel}</span>
                                 <span className="text-zinc-100 font-semibold">{item.text}</span>
                             </div>
                         ) : (
-                            <div className={`whitespace-pre-wrap ${item.isCode ? 'text-zinc-400 leading-tight font-semibold text-xs' : 'text-zinc-300'}`}>
+                            <div
+                                className={`font-mono ${item.isCode
+                                    ? 'whitespace-pre overflow-x-auto scrollbar-none text-[9px] xs:text-[10px] sm:text-xs md:text-sm leading-normal py-0.5 text-zinc-400 font-semibold'
+                                    : 'whitespace-pre-wrap text-zinc-300'
+                                    }`}
+                            >
                                 {item.text}
                             </div>
                         )}
@@ -450,12 +452,28 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                 <div ref={terminalEndRef} />
             </div>
 
+            {/* Mobile Quick Actions Bar */}
+            {isMobile && (
+                <div className="flex gap-2 px-4 py-2 bg-zinc-900/40 border-t border-zinc-900/50 overflow-x-auto scrollbar-none select-none">
+                    {['help', 'about', 'skills', 'projects', 'blog', 'clear', 'exit'].map((cmd) => (
+                        <button
+                            key={cmd}
+                            type="button"
+                            onClick={() => handleTerminalCommand(cmd)}
+                            className="px-2.5 py-1 rounded-md bg-zinc-900 text-zinc-300 hover:text-zinc-100 hover:bg-zinc-850 border border-zinc-800 text-[10px] font-mono whitespace-nowrap cursor-pointer transition-colors active:bg-royal active:border-royal active:text-white"
+                        >
+                            {cmd}
+                        </button>
+                    ))}
+                </div>
+            )}
+
             {/* Input Bar wrapped in form */}
             <form
                 onSubmit={handleSubmit}
                 className="p-4 bg-zinc-950 border-t border-zinc-900 flex items-center gap-2"
             >
-                <span className="text-royal font-bold select-none font-mono">guest@aryaprakashraj:~$</span>
+                <span className="text-royal font-bold select-none font-mono">{promptLabel}</span>
                 <input
                     ref={inputRef}
                     type="text"

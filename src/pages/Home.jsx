@@ -268,14 +268,9 @@ function Home() {
                         {[
                             {
                                 name: "Personal Blog",
-                                desc: "Full-stack personal site with Spring Boot REST API, JWT auth, PostgreSQL, and React frontend.",
+                                desc: "Full-stack portfolio site with Spring Boot REST API, JWT auth, PostgreSQL, and React frontend.",
                                 tags: ["Spring Boot", "PostgreSQL", "JWT", "Docker"],
                                 link: "https://github.com/aryaprakashraj/Blog"
-                            }, {
-                                name: "Portfolio",
-                                desc: "Personal portfolio with interactive CLI interface and a live full-stack blog.",
-                                tags: ["React", "Vite", "Tailwind"],
-                                link: "https://github.com/aryaprakashraj/Portfolio"
                             },
                             {
                                 name: "Next Leap",
