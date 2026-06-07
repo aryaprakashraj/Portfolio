@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Blog from './pages/Blog'
@@ -9,6 +9,12 @@ import ScrollToTop from './components/ScrollToTop'
 import FullTerminalConsole from './components/FullTerminalConsole'
 
 function App() {
+
+  useEffect(() => {
+    fetch('https://blog-az71.onrender.com/api/articles')
+      .catch(() => { }); // silently ignore errors
+  }, []);
+
   const [isTerminalMode, setIsTerminalMode] = useState(() => {
     // Land on terminal mode by default if visiting the root route "/"
     return window.location.pathname === '/'
@@ -36,6 +42,8 @@ function App() {
       </div>
     </BrowserRouter>
   )
+
+
 }
 
 export default App

@@ -49,36 +49,48 @@ function FullTerminalConsole({ setIsTerminalMode }) {
     // SSH shell boot effect
     useEffect(() => {
         const welcomeLines = [
-            { type: 'output', text: '  ██████╗  ██████╗ ██████╗ ████████╗███████╗ ██████╗ ██╗     ██╗ ██████╗  ', isCode: true },
-            { type: 'output', text: '  ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗██║     ██║██╔═══██╗ ', isCode: true },
-            { type: 'output', text: '  ██████╔╝██║   ██║██████╔╝   ██║   █████╗  ██║   ██║██║     ██║██║   ██║ ', isCode: true },
-            { type: 'output', text: '  ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝  ██║   ██║██║     ██║██║   ██║ ', isCode: true },
-            { type: 'output', text: '  ██║     ╚██████╔╝██║  ██║   ██║   ██║     ╚██████╔╝███████╗██║╚██████╔╝ ', isCode: true },
-            { type: 'output', text: '  ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝  ', isCode: true },
-            { type: 'output', text: '' },
-            { type: 'output', text: 'Connecting to guest@aryaprakashraj...' },
-            { type: 'output', text: 'Connection established successfully.' },
-            { type: 'output', text: '' },
-            { type: 'output', text: 'Welcome to Arya\'s Global Interactive CLI v1.1.0' },
-            { type: 'output', text: 'Type "help" to see available commands.' },
-            { type: 'output', text: 'Type "gui" or "exit" to return to the graphical portfolio.' },
-            { type: 'output', text: '' }
+            { text: 'Initializing secure terminal session...', delay: 300, isCode: true },
+            { text: 'Connecting to database at api.aryaprakashraj.dev...', delay: 900, isCode: true },
+            { text: '  -> Connection established via SSL/TLS v1.3.', delay: 300, isCode: true },
+            { text: 'Fetching profile data and project catalog...', delay: 1000, isCode: true },
+            { text: '  -> Profile for "Arya Prakash Raj" cached successfully.', delay: 200, isCode: true },
+            { text: '  -> Skill matrix verified (18 active competencies).', delay: 200, isCode: true },
+            { text: '  -> 3 projects verified in local catalog.', delay: 300, isCode: true },
+            { text: 'Spawning interactive guest shell...', delay: 600, isCode: true },
+            { text: '', delay: 100 },
+            { text: 'Welcome to Arya\'s Global Interactive CLI v1.1.0' },
+            { text: 'Type "help" to see available commands.' },
+            { text: 'Type "gui" or "exit" to return to the graphical portfolio.' },
+            { text: '', delay: 100 }
         ]
 
+        setIsStreaming(true)
         let index = 0
-        const timer = setInterval(() => {
+        let timeoutId;
+
+        const runStream = () => {
             if (index < welcomeLines.length) {
                 const line = welcomeLines[index]
                 if (line) {
-                    setTerminalHistory(prev => [...prev, line])
+                    setTerminalHistory(prev => [
+                        ...prev,
+                        { type: 'output', text: line.text, isCode: line.isCode }
+                    ])
                 }
                 index++
+                const nextDelay = line?.delay !== undefined ? line.delay : 40
+                timeoutId = setTimeout(runStream, nextDelay)
             } else {
-                clearInterval(timer)
+                setIsStreaming(false)
             }
-        }, 20)
+        }
 
-        return () => clearInterval(timer)
+        runStream()
+
+        return () => {
+            clearTimeout(timeoutId)
+            setIsStreaming(false)
+        }
     }, [])
 
     // Fetch articles for the blog command
@@ -449,6 +461,30 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                         )}
                     </div>
                 ))}
+
+                {/* Input Bar positioned inline under content */}
+                {!isStreaming && (
+                    <form
+                        onSubmit={handleSubmit}
+                        className="flex items-center gap-2 mt-2"
+                    >
+                        <span className="text-royal font-bold select-none font-mono">{promptLabel}</span>
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            value={terminalInput}
+                            onChange={(e) => setTerminalInput(e.target.value)}
+                            disabled={isStreaming}
+                            className="flex-1 bg-transparent text-zinc-100 font-mono focus:outline-none caret-royal placeholder-zinc-800 text-xs sm:text-sm disabled:opacity-50"
+                            placeholder="type a command..."
+                            autoComplete="off"
+                            autoCorrect="off"
+                            autoCapitalize="off"
+                            spellCheck="false"
+                            autoFocus
+                        />
+                    </form>
+                )}
                 <div ref={terminalEndRef} />
             </div>
 
@@ -467,28 +503,6 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                     ))}
                 </div>
             )}
-
-            {/* Input Bar wrapped in form */}
-            <form
-                onSubmit={handleSubmit}
-                className="p-4 bg-zinc-950 border-t border-zinc-900 flex items-center gap-2"
-            >
-                <span className="text-royal font-bold select-none font-mono">{promptLabel}</span>
-                <input
-                    ref={inputRef}
-                    type="text"
-                    value={terminalInput}
-                    onChange={(e) => setTerminalInput(e.target.value)}
-                    disabled={isStreaming}
-                    className="flex-1 bg-transparent text-zinc-100 font-mono focus:outline-none caret-royal placeholder-zinc-700 text-sm disabled:opacity-50"
-                    placeholder={isStreaming ? "Streaming console output buffer..." : "type a command..."}
-                    autoComplete="off"
-                    autoCorrect="off"
-                    autoCapitalize="off"
-                    spellCheck="false"
-                    autoFocus
-                />
-            </form>
         </div>
     )
 }
