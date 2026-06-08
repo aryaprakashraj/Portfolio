@@ -246,7 +246,7 @@ function FullTerminalConsole({ setIsTerminalMode }) {
             case 'help':
                 response = [
                     { type: 'output', text: 'Available Commands:' },
-                    { type: 'output', text: '  fastfetch  - Display Fedora system info & hardware specs' },
+                    { type: 'output', text: '  fastfetch  - Display system info & hardware configs' },
                     { type: 'output', text: '  about      - Read my bio & developer philosophy' },
                     { type: 'output', text: '  skills     - List core technical skills categorized' },
                     { type: 'output', text: '  projects   - Show core projects with description & source links' },
@@ -293,9 +293,9 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                     { type: 'output', text: '' },
                     { type: 'output', text: '[ CORE FOCUS ]' },
                     { type: 'output', text: '  • Robust backends using Java and Spring Boot' },
-                    { type: 'output', text: '  • Relational database optimization and data mapping' },
                     { type: 'output', text: '  • Data Structures, Algorithms, and OS internals' },
-                    { type: 'output', text: '  • Active LeetCode solver (250+ solved in Java)' }
+                    { type: 'output', text: '  • Building Actual Stuffs' },
+                    { type: 'output', text: '  • Learning and exploring things that excites me.' }
                 ];
                 break;
             case 'skills':
@@ -307,7 +307,7 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                     { type: 'output', text: '  • Spring Boot      • Spring Security  • REST APIs' },
                     { type: 'output', text: '' },
                     { type: 'output', text: '[ DATABASES & ORM ]' },
-                    { type: 'output', text: '  • PostgreSQL       • Spring Data JPA' },
+                    { type: 'output', text: '  • MySQL            • PostgreSQL       • Spring Data JPA' },
                     { type: 'output', text: '' },
                     { type: 'output', text: '[ DEVELOPER TOOLS ]' },
                     { type: 'output', text: '  • Git              • Linux            • IntelliJ         • Postman' },

@@ -19,8 +19,6 @@ function Blog() {
 
     return (
         <main className="min-h-screen px-8 pt-32 max-w-3xl mx-auto relative pb-24">
-            {/* Background Grid */}
-            <div className="fixed inset-0 bg-grid -z-20 pointer-events-none" />
             {/* Top radial gradient light */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[350px] bg-royal/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 

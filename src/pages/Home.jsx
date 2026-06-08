@@ -47,9 +47,6 @@ function Home() {
     return (
         <main className="max-w-3xl mx-auto px-8 relative">
 
-            {/* Grid & Radial Glow Background */}
-            <div className="fixed inset-0 bg-grid -z-20 pointer-events-none" />
-
             {/* Interactive Mouse-Following Glow */}
             <div
                 className="fixed pointer-events-none -z-10 transition-transform duration-700 ease-out"

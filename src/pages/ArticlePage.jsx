@@ -19,14 +19,12 @@ function ArticlePage() {
 
   if (loading) return (
     <main className="min-h-screen px-8 pt-32 max-w-3xl mx-auto relative">
-      <div className="fixed inset-0 bg-grid -z-20 pointer-events-none" />
       <p className="text-zinc-500 font-mono text-sm animate-pulse">loading...</p>
     </main>
   )
 
   if (!article) return (
     <main className="min-h-screen px-8 pt-32 max-w-3xl mx-auto relative">
-      <div className="fixed inset-0 bg-grid -z-20 pointer-events-none" />
       <p className="text-zinc-400 font-mono text-sm mb-6">article not found.</p>
       <Link to="/blog" className="text-zinc-400 hover:text-zinc-100 transition-colors font-mono flex items-center gap-1 group w-fit">
         <span className="inline-block transition-transform duration-300 group-hover:-translate-x-0.5">←</span> back to blog
@@ -36,8 +34,6 @@ function ArticlePage() {
 
   return (
     <main className="min-h-screen px-8 pt-32 max-w-3xl mx-auto pb-24 relative">
-      {/* Background Grid */}
-      <div className="fixed inset-0 bg-grid -z-20 pointer-events-none" />
       {/* Top radial gradient light */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[350px] bg-royal/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 

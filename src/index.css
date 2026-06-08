@@ -25,12 +25,12 @@ body {
 
 /* Grid overlay background */
 .bg-grid {
-    background-size: 30px 30px;
+    background-size: 45px 45px;
     background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    mask-image: radial-gradient(ellipse at 50% 50%, black 60%, transparent 100%);
-    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 60%, transparent 100%);
+        linear-gradient(to right, rgba(48, 92, 222, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(48, 92, 222, 0.08) 1px, transparent 1px);
+    mask-image: radial-gradient(ellipse at 50% 50%, black 75%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 75%, transparent 100%);
 }
 
 /* Text & Accent Animations */
