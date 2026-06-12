@@ -8,7 +8,8 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        display: ['Outfit', 'sans-serif'],
+        serif: ['Lora', 'serif'],
+        display: ['Lora', 'serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
     },

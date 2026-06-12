@@ -33,6 +33,7 @@ function Navbar({ isTerminalMode, setIsTerminalMode }) {
       
       const aboutSection = document.getElementById('about')
       const projectsSection = document.getElementById('projects')
+      const blogSection = document.getElementById('blog')
 
       let currentSection = 'home'
 
@@ -50,10 +51,17 @@ function Navbar({ isTerminalMode, setIsTerminalMode }) {
         }
       }
 
+      if (blogSection) {
+        const blogTop = blogSection.getBoundingClientRect().top + window.scrollY
+        if (scrollPosition >= blogTop) {
+          currentSection = 'blog'
+        }
+      }
+
       // Detect if near the bottom of the page
       const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 50
-      if (isAtBottom && projectsSection) {
-        currentSection = 'projects'
+      if (isAtBottom && blogSection) {
+        currentSection = 'blog'
       }
 
       setActiveSection(currentSection)
@@ -71,9 +79,6 @@ function Navbar({ isTerminalMode, setIsTerminalMode }) {
   };
 
   const isLinkActive = (link) => {
-    if (link.to === '/blog') {
-      return location.pathname.startsWith('/blog')
-    }
     if (location.pathname === '/') {
       if (link.to === '/') {
         return activeSection === 'home'
@@ -83,6 +88,13 @@ function Navbar({ isTerminalMode, setIsTerminalMode }) {
       }
       if (link.to === '/#projects') {
         return activeSection === 'projects'
+      }
+      if (link.to === '/blog') {
+        return activeSection === 'blog'
+      }
+    } else {
+      if (link.to === '/blog') {
+        return location.pathname.startsWith('/blog')
       }
     }
     return false
@@ -97,7 +109,7 @@ function Navbar({ isTerminalMode, setIsTerminalMode }) {
 
   return (
     <>
-      <nav className="fixed top-0 w-full z-50 px-6 md:px-8 py-4 flex justify-between items-center border-b border-zinc-900/80 backdrop-blur-xl bg-zinc-950/70 transition-all duration-300">
+      <nav className="fixed top-0 w-full z-50 px-6 md:px-8 py-4 flex justify-between items-center border-b border-zinc-200/50 backdrop-blur-xl bg-white/80 transition-all duration-300">
         {/* Scroll Progress Bar */}
         <div 
           className="absolute bottom-0 left-0 h-[2px] bg-royal shadow-[0_0_10px_#305CDE] transition-all duration-100 ease-out" 
@@ -119,7 +131,7 @@ function Navbar({ isTerminalMode, setIsTerminalMode }) {
                   to={link.to}
                   onClick={link.onClick}
                   className={`relative py-1 transition-colors duration-300 ${
-                    active ? 'text-royal font-semibold' : 'text-zinc-300 hover:text-zinc-100'
+                    active ? 'text-royal font-semibold' : 'text-zinc-600 hover:text-zinc-950'
                   }`}
                 >
                   {link.label}
@@ -134,7 +146,7 @@ function Navbar({ isTerminalMode, setIsTerminalMode }) {
             className={`px-3 py-1.5 rounded-lg border font-mono text-xs cursor-pointer transition-all duration-300 flex items-center gap-1.5 shadow-sm ${
               isTerminalMode 
                 ? 'bg-royal border-royal text-zinc-50 hover:bg-[#4d75ec]' 
-                : 'bg-zinc-950/40 border-zinc-800 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700'
+                : 'bg-zinc-50/50 border-zinc-200 text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100 hover:border-zinc-300'
             }`}
             aria-label="Toggle Developer Console"
           >
@@ -146,7 +158,7 @@ function Navbar({ isTerminalMode, setIsTerminalMode }) {
         {/* Hamburger Menu Toggle (Mobile only) */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="flex md:hidden text-zinc-400 hover:text-zinc-100 p-1.5 rounded-lg border border-zinc-900/50 bg-zinc-950/40 hover:border-zinc-800 transition-colors"
+          className="flex md:hidden text-zinc-600 hover:text-zinc-950 p-1.5 rounded-lg border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 hover:border-zinc-300 transition-colors"
           aria-label="Toggle menu"
         >
           <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -165,15 +177,15 @@ function Navbar({ isTerminalMode, setIsTerminalMode }) {
 
       {/* Mobile Drawer Shelf/Sidebar */}
       <div 
-        className={`fixed top-0 right-0 h-full w-[260px] bg-zinc-950/95 border-l border-zinc-900/80 backdrop-blur-xl z-50 p-6 flex flex-col gap-8 shadow-2xl transition-transform duration-300 ease-out md:hidden ${
+        className={`fixed top-0 right-0 h-full w-[260px] bg-white/95 border-l border-zinc-200 backdrop-blur-xl z-50 p-6 flex flex-col gap-8 shadow-2xl transition-transform duration-300 ease-out md:hidden ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex justify-between items-center border-b border-zinc-900 pb-4">
-          <span className="text-sm font-bold tracking-tight font-display text-zinc-400">Navigation</span>
+        <div className="flex justify-between items-center border-b border-zinc-100 pb-4">
+          <span className="text-sm font-bold tracking-tight font-display text-zinc-500">Navigation</span>
           <button 
             onClick={() => setIsMobileMenuOpen(false)}
-            className="p-1.5 rounded-lg border border-zinc-900/50 bg-zinc-950/40 text-zinc-400 hover:text-zinc-100 hover:border-zinc-800 transition-colors"
+            className="p-1.5 rounded-lg border border-zinc-200 bg-zinc-50 text-zinc-600 hover:text-zinc-950 hover:border-zinc-300 transition-colors"
             aria-label="Close menu"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -197,7 +209,7 @@ function Navbar({ isTerminalMode, setIsTerminalMode }) {
                 className={`py-2 px-3.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                   active 
                     ? 'text-royal font-semibold bg-royal/10 border-l-2 border-royal' 
-                    : 'text-zinc-300 hover:text-zinc-100 hover:bg-zinc-900/40'
+                    : 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-50'
                 }`}
               >
                 {link.label}
@@ -207,8 +219,8 @@ function Navbar({ isTerminalMode, setIsTerminalMode }) {
         </div>
 
         {/* CLI Environment Switcher */}
-        <div className="mt-auto border-t border-zinc-900 pt-6 flex flex-col gap-3">
-          <span className="text-xs text-zinc-500 font-mono">Environment Mode</span>
+        <div className="mt-auto border-t border-zinc-100 pt-6 flex flex-col gap-3">
+          <span className="text-xs text-zinc-400 font-mono">Environment Mode</span>
           <button 
             onClick={() => {
               setIsMobileMenuOpen(false)
@@ -217,7 +229,7 @@ function Navbar({ isTerminalMode, setIsTerminalMode }) {
             className={`w-full py-2.5 rounded-lg border font-mono text-xs cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 shadow-sm ${
               isTerminalMode 
                 ? 'bg-royal border-royal text-zinc-50 hover:bg-[#4d75ec]' 
-                : 'bg-zinc-950/40 border-zinc-800 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700'
+                : 'bg-zinc-50/50 border-zinc-200 text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100 hover:border-zinc-300'
             }`}
             aria-label="Toggle Developer Console"
           >

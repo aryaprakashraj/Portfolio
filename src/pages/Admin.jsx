@@ -79,14 +79,14 @@ function Admin() {
   if (!token) return (
     <main className="min-h-screen flex items-center justify-center px-8">
       <div className="w-full max-w-sm">
-        <p className="text-gray-500 text-xs font-mono mb-8 tracking-widest uppercase">admin access</p>
+        <p className="text-zinc-450 text-xs font-mono mb-8 tracking-widest uppercase">admin access</p>
         <div className="flex flex-col gap-3">
           <input
             type="text"
             placeholder="username"
             value={username}
             onChange={e => setUsername(e.target.value)}
-            className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm outline-none focus:border-white/30 transition-colors font-mono"
+            className="bg-zinc-50 border border-zinc-200 rounded-lg px-4 py-3 text-sm outline-none text-zinc-900 focus:border-zinc-400 transition-colors font-mono"
           />
           <input
             type="password"
@@ -94,11 +94,11 @@ function Admin() {
             value={password}
             onChange={e => setPassword(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && login()}
-            className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm outline-none focus:border-white/30 transition-colors font-mono"
+            className="bg-zinc-50 border border-zinc-200 rounded-lg px-4 py-3 text-sm outline-none text-zinc-900 focus:border-zinc-400 transition-colors font-mono"
           />
-          {error && <p className="text-red-400 text-xs font-mono">{error}</p>}
+          {error && <p className="text-red-500 text-xs font-mono">{error}</p>}
           <button onClick={login}
-            className="bg-white text-black rounded-lg px-4 py-3 text-sm font-medium hover:bg-gray-200 transition-colors mt-2">
+            className="bg-zinc-950 text-zinc-50 rounded-lg px-4 py-3 text-sm font-medium hover:bg-zinc-800 transition-colors mt-2 cursor-pointer shadow-sm">
             login
           </button>
         </div>
@@ -110,11 +110,11 @@ function Admin() {
   if (view === 'create' || view === 'edit') return (
     <main className="min-h-screen px-8 pt-32 max-w-3xl mx-auto pb-24">
       <div className="flex justify-between items-center mb-8">
-        <p className="text-gray-500 text-xs font-mono tracking-widest uppercase">
+        <p className="text-zinc-500 text-xs font-mono tracking-widest uppercase">
           {view === 'edit' ? 'edit article' : 'new article'}
         </p>
         <button onClick={() => { setView('list'); setSelected(null); setForm({ title: '', content: '', status: 'DRAFT' }) }}
-          className="text-gray-600 hover:text-white text-sm font-mono transition-colors">
+          className="text-zinc-500 hover:text-zinc-900 text-sm font-mono transition-colors cursor-pointer">
           ← back
         </button>
       </div>
@@ -124,7 +124,7 @@ function Admin() {
           placeholder="Title"
           value={form.title}
           onChange={e => setForm({ ...form, title: e.target.value })}
-          className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-lg font-bold outline-none focus:border-white/30 transition-colors"
+          className="bg-zinc-50 border border-zinc-200 rounded-lg px-4 py-3 text-lg font-bold text-zinc-900 outline-none focus:border-zinc-400 transition-colors"
         />
         
         <textarea
@@ -132,20 +132,20 @@ function Admin() {
           value={form.content}
           onChange={e => setForm({ ...form, content: e.target.value })}
           rows={20}
-          className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm outline-none focus:border-white/30 transition-colors resize-none leading-relaxed font-mono"
+          className="bg-zinc-50 border border-zinc-200 rounded-lg px-4 py-3 text-sm text-zinc-900 outline-none focus:border-zinc-400 transition-colors resize-none leading-relaxed font-mono"
         />
-        {error && <p className="text-red-400 text-xs font-mono">{error}</p>}
+        {error && <p className="text-red-500 text-xs font-mono">{error}</p>}
         <div className="flex gap-3">
           <button onClick={() => saveArticle('PUBLISHED')}
-            className="bg-white text-black rounded-lg px-6 py-2.5 text-sm font-medium hover:bg-gray-200 transition-colors">
+            className="bg-zinc-950 text-zinc-50 rounded-lg px-6 py-2.5 text-sm font-medium hover:bg-zinc-800 transition-colors cursor-pointer shadow-sm">
             publish
           </button>
           <button onClick={() => saveArticle('DRAFT')}
-            className="border border-white/10 rounded-lg px-6 py-2.5 text-sm hover:border-white/30 transition-colors">
+            className="border border-zinc-200 rounded-lg px-6 py-2.5 text-sm hover:border-zinc-450 hover:bg-zinc-50 transition-colors text-zinc-700 cursor-pointer">
             save draft
           </button>
           <button onClick={() => { setView('list'); setSelected(null) }}
-            className="text-gray-600 hover:text-white text-sm font-mono transition-colors ml-2">
+            className="text-zinc-500 hover:text-zinc-900 text-sm font-mono transition-colors ml-2 cursor-pointer">
             cancel
           </button>
         </div>
@@ -157,14 +157,14 @@ function Admin() {
   return (
     <main className="min-h-screen px-8 pt-32 max-w-3xl mx-auto pb-24">
       <div className="flex justify-between items-center mb-12">
-        <p className="text-gray-500 text-xs font-mono tracking-widest uppercase">admin</p>
+        <p className="text-zinc-500 text-xs font-mono tracking-widest uppercase">admin</p>
         <div className="flex gap-4">
           <button onClick={() => { setForm({ title: '', content: '', status: 'DRAFT' }); setView('create') }}
-            className="bg-white text-black rounded-lg px-4 py-2 text-sm font-medium hover:bg-gray-200 transition-colors">
+            className="bg-zinc-950 text-zinc-50 rounded-lg px-4 py-2 text-sm font-medium hover:bg-zinc-800 transition-colors cursor-pointer shadow-sm">
             + new article
           </button>
           <button onClick={logout}
-            className="text-gray-600 hover:text-white text-sm font-mono transition-colors">
+            className="text-zinc-500 hover:text-zinc-900 text-sm font-mono transition-colors cursor-pointer">
             logout
           </button>
         </div>
@@ -173,30 +173,30 @@ function Admin() {
       <div className="flex flex-col gap-3">
         {articles.map(article => (
           <div key={article.id}
-            className="border border-white/10 rounded-lg p-4 flex justify-between items-start hover:border-white/20 transition-colors">
+            className="border border-zinc-200 bg-zinc-50/20 hover:bg-zinc-50/50 rounded-lg p-4 flex justify-between items-start hover:border-zinc-300 transition-colors">
             <div>
-              <h3 className="font-medium mb-1">{article.title}</h3>
+              <h3 className="font-medium text-zinc-900 mb-1">{article.title}</h3>
               <div className="flex gap-3 items-center">
-                <span className={`text-xs font-mono ${article.status === 'PUBLISHED' ? 'text-green-500' : 'text-gray-600'}`}>
+                <span className={`text-xs font-mono ${article.status === 'PUBLISHED' ? 'text-emerald-600' : 'text-zinc-400'}`}>
                   {article.status.toLowerCase()}
                 </span>
-                <span className="text-xs text-gray-700 font-mono">
+                <span className="text-xs text-zinc-500 font-mono">
                   {new Date(article.createdAt).toLocaleDateString('en-US', {
                     month: 'short', day: 'numeric', year: 'numeric'
                   })}
                 </span>
-                <span className="text-xs text-gray-700 font-mono">
+                <span className="text-xs text-zinc-500 font-mono">
                   {article.viewCount} views
                 </span>
               </div>
             </div>
-            <div className="flex gap-3 ml-4 shrink-0">
+            <div className="flex gap-3 ml-4 shrink-0 font-mono">
               <button onClick={() => startEdit(article)}
-                className="text-xs text-gray-500 hover:text-white transition-colors font-mono">
+                className="text-xs text-zinc-550 hover:text-royal transition-colors cursor-pointer">
                 edit
               </button>
               <button onClick={() => deleteArticle(article.id)}
-                className="text-xs text-gray-500 hover:text-red-400 transition-colors font-mono">
+                className="text-xs text-zinc-550 hover:text-red-500 transition-colors cursor-pointer">
                 delete
               </button>
             </div>

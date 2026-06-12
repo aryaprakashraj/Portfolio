@@ -26,11 +26,10 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="relative z-0 min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-royal/30">
+      <div className={`relative z-0 min-h-screen font-sans ${isTerminalMode ? 'bg-zinc-950 text-zinc-50 selection:bg-royal/30' : 'bg-white text-zinc-900 selection:bg-royal/10'}`}>
         {!isTerminalMode && (
           <>
             <Navbar isTerminalMode={isTerminalMode} setIsTerminalMode={handleSetTerminalMode} />
-            <div className="fixed inset-0 bg-grid -z-10 pointer-events-none" />
           </>
         )}
         {isTerminalMode ? (
