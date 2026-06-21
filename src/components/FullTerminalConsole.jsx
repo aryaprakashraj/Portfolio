@@ -64,6 +64,7 @@ function FullTerminalConsole({ setIsTerminalMode }) {
             { text: '', delay: 100 }
         ]
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsStreaming(true)
         let index = 0
         let timeoutId;
@@ -242,6 +243,14 @@ function FullTerminalConsole({ setIsTerminalMode }) {
             return;
         }
 
+        if (cleanCmd === 'open x' || cleanCmd === 'open x.com') {
+            window.open('https://x.com/Aryaprakashraj', '_blank');
+            response = [{ type: 'output', text: 'Opening X.com profile...' }];
+            appendWithStream(cmdText, response);
+            setTerminalInput('');
+            return;
+        }
+
         switch (cleanCmd) {
             case 'help':
                 response = [
@@ -271,7 +280,7 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                     { type: 'output', text: "---------------------", isCode: true },
                     { type: 'output', text: "OS:             Fedora Linux 44 (Workstation Edition) x86_64" },
                     { type: 'output', text: "Host:           ASUS EXPERTBOOK P3405CVA (1.0)" },
-                    { type: 'output', text: "Kernel:         Linux 7.0.9-205.fc44.x86_64" },
+                    { type: 'output', text: "Kernel:         Linux 7.0.12-201.fc44.x86_64" },
                     { type: 'output', text: "Shell:          bash 5.3.9" },
                     { type: 'output', text: "DE:             GNOME 50.1" },
                     { type: 'output', text: "WM:             Mutter (Wayland)" },
@@ -279,7 +288,7 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                     { type: 'output', text: "CPU:            13th Gen Intel(R) Core(TM) i5-13420H (12) @ 4.60 GHz" },
                     { type: 'output', text: "GPU:            Intel UHD Graphics [Integrated]" },
                     { type: 'output', text: "Memory:         16.00 GiB" },
-                    { type: 'output', text: "Mobile:         Poco F1 (Daily Driver)" },
+                    { type: 'output', text: "Mobile:         OnePlus 12 (Daily Driver)" },
                     { type: 'output', text: "Audio:          Moto Buds (AirPods)" },
                     { type: 'output', text: "Locale:         en_US.UTF-8" }
                 ];
@@ -324,8 +333,8 @@ function FullTerminalConsole({ setIsTerminalMode }) {
             case 'projects':
                 response = [
                     { type: 'output', text: '[ 1. PERSONAL BLOG ]' },
-                    { type: 'output', text: '  - Description: Full-stack portfolio site with Spring Boot REST API, JWT auth, and React.' },
-                    { type: 'output', text: '  - Tech Stack:  Spring Boot, React, PostgreSQL, JWT' },
+                    { type: 'output', text: '  - Description: Personal publishing platform with Spring Boot REST API, JWT auth, PostgreSQL, and an integrated newsletter engine for subscriber management and automated email delivery.' },
+                    { type: 'output', text: '  - Tech Stack:  Spring Boot, Docker, PostgreSQL, JWT, SMTP' },
                     { type: 'output', text: '  - Source:      https://github.com/aryaprakashraj/Blog' },
                     { type: 'output', text: '' },
                     { type: 'output', text: '[ 2. NEXT LEAP ]' },
@@ -357,8 +366,9 @@ function FullTerminalConsole({ setIsTerminalMode }) {
                     { type: 'output', text: '  • Email:    aryaprakashraj@gmail.com' },
                     { type: 'output', text: '  • GitHub:   https://github.com/aryaprakashraj' },
                     { type: 'output', text: '  • LinkedIn: https://linkedin.com/in/aryaprakashraj' },
+                    { type: 'output', text: '  • X:        https://x.com/Aryaprakashraj' },
                     { type: 'output', text: '' },
-                    { type: 'output', text: '* Type "open github" or "open linkedin" to visit the profiles directly!' }
+                    { type: 'output', text: '* Type "open github", "open linkedin", or "open x" to visit the profiles directly!' }
                 ];
                 break;
             case 'joke': {

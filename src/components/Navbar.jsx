@@ -12,11 +12,15 @@ function Navbar({ isTerminalMode, setIsTerminalMode }) {
       const totalScrollHeight = document.documentElement.scrollHeight - window.innerHeight
       if (totalScrollHeight > 0) {
         setScrollProgress((window.scrollY / totalScrollHeight) * 100)
+      } else {
+        setScrollProgress(0)
       }
     }
     window.addEventListener('scroll', handleScroll)
+    // Sync progress on load/navigation
+    handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [location])
 
   // Scroll Spy for Home page sections
   useEffect(() => {

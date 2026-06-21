@@ -91,6 +91,34 @@ function Home() {
                         This site is one of those things I built to figure out.
                     </p>
                 </Reveal>
+                <Reveal delay={300}>
+                    <div className="flex items-center justify-center gap-3 mt-8">
+                        <a href="https://github.com/aryaprakashraj" target="_blank" rel="noreferrer"
+                            aria-label="GitHub Profile"
+                            className="p-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-650 hover:text-royal hover:border-royal/30 hover:scale-105 transition-all duration-300">
+                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                                <path d="M9 18c-4.51 2-5-2-7-2" />
+                            </svg>
+                        </a>
+                        <a href="https://linkedin.com/in/aryaprakashraj" target="_blank" rel="noreferrer"
+                            aria-label="LinkedIn Profile"
+                            className="p-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-650 hover:text-royal hover:border-royal/30 hover:scale-105 transition-all duration-300">
+                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                <rect x="2" y="9" width="4" height="12" />
+                                <circle cx="4" cy="4" r="2" />
+                            </svg>
+                        </a>
+                        <a href="https://x.com/Aryaprakashraj" target="_blank" rel="noreferrer"
+                            aria-label="X Profile"
+                            className="p-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-650 hover:text-royal hover:border-royal/30 hover:scale-105 transition-all duration-300">
+                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                    </div>
+                </Reveal>
 
             </section>
 
@@ -164,9 +192,9 @@ function Home() {
                     <div className="flex flex-col gap-4">
                         {[
                             {
-                                name: "Personal Blog",
-                                desc: "Full-stack portfolio site with Spring Boot REST API, JWT auth, PostgreSQL, and React frontend.",
-                                tags: ["Spring Boot", "PostgreSQL", "JWT", "Docker"],
+                                name: "Blog + Newsletter",
+                                desc: "Personal publishing platform with Spring Boot REST API, JWT auth, PostgreSQL, and an integrated newsletter engine for subscriber management and automated email delivery.",
+                                tags: ["Spring Boot", "PostgreSQL", "JWT", "Docker", "SMTP"],
                                 link: "https://github.com/aryaprakashraj/Blog"
                             },
                             {
@@ -244,56 +272,63 @@ function Home() {
                         <span className="w-1.5 h-1.5 rounded-full bg-royal/70 shadow-[0_0_8px_#305CDE]" />
                         contact
                     </p>
-                    <div className="p-8 border border-zinc-100 bg-zinc-50/30 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div className="p-8 border border-zinc-100 bg-zinc-50/30 rounded-2xl flex flex-col items-center text-center gap-6">
                         <div>
                             <h2 className="text-3xl font-bold font-serif tracking-tight text-zinc-900 mb-2">Let's talk</h2>
-                            <p className="text-zinc-600 text-[15px] leading-relaxed max-w-sm mb-4">
+                            <p className="text-zinc-650 text-[15px] leading-relaxed max-w-sm mb-4 mx-auto">
                                 Open to internships, collaborations, or just a good conversation about tech.
                             </p>
-                            <div className="flex items-center gap-3">
-                                <a href="https://github.com/aryaprakashraj" target="_blank" rel="noreferrer"
-                                    aria-label="GitHub Profile"
-                                    className="p-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-650 hover:text-royal hover:border-royal/30 hover:scale-105 transition-all duration-300">
-                                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                                        <path d="M9 18c-4.51 2-5-2-7-2" />
-                                    </svg>
-                                </a>
-                                <a href="https://linkedin.com/in/aryaprakashraj" target="_blank" rel="noreferrer"
-                                    aria-label="LinkedIn Profile"
-                                    className="p-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-650 hover:text-royal hover:border-royal/30 hover:scale-105 transition-all duration-300">
-                                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                                        <rect x="2" y="9" width="4" height="12" />
-                                        <circle cx="4" cy="4" r="2" />
-                                    </svg>
-                                </a>
-                            </div>
                         </div>
-                        <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-                            <button
-                                onClick={copyEmail}
-                                className="px-5 py-3 rounded-xl border border-zinc-200 bg-white hover:border-zinc-350 hover:text-zinc-950 text-sm font-mono text-zinc-600 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm group min-w-[140px]"
-                            >
-                                {copied ? (
-                                    <>
-                                        <span className="text-emerald-500">✓</span>
-                                        <span className="text-emerald-500 font-medium">Copied!</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <span className="group-hover:scale-105 transition-transform">📄</span>
-                                        <span>Copy Email</span>
-                                    </>
-                                )}
-                            </button>
-                            <a
-                                href="mailto:aryaprakashraj@gmail.com"
-                                className="px-5 py-3 rounded-xl bg-zinc-950 text-zinc-50 hover:bg-zinc-800 text-sm font-medium transition-all duration-300 text-center flex items-center justify-center gap-1.5 shadow-sm"
-                            >
-                                Email me <span className="font-mono">→</span>
+                        <div className="flex items-center justify-center gap-3">
+                            <a href="mailto:aryaprakashraj@gmail.com"
+                                aria-label="Email Me"
+                                className="p-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-650 hover:text-royal hover:border-royal/30 hover:scale-105 transition-all duration-300">
+                                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <rect width="20" height="16" x="2" y="4" rx="2" />
+                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                                </svg>
+                            </a>
+                            <a href="https://github.com/aryaprakashraj" target="_blank" rel="noreferrer"
+                                aria-label="GitHub Profile"
+                                className="p-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-650 hover:text-royal hover:border-royal/30 hover:scale-105 transition-all duration-300">
+                                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                                    <path d="M9 18c-4.51 2-5-2-7-2" />
+                                </svg>
+                            </a>
+                            <a href="https://linkedin.com/in/aryaprakashraj" target="_blank" rel="noreferrer"
+                                aria-label="LinkedIn Profile"
+                                className="p-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-650 hover:text-royal hover:border-royal/30 hover:scale-105 transition-all duration-300">
+                                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                    <rect x="2" y="9" width="4" height="12" />
+                                    <circle cx="4" cy="4" r="2" />
+                                </svg>
+                            </a>
+                            <a href="https://x.com/Aryaprakashraj" target="_blank" rel="noreferrer"
+                                aria-label="X Profile"
+                                className="p-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-650 hover:text-royal hover:border-royal/30 hover:scale-105 transition-all duration-300">
+                                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                </svg>
                             </a>
                         </div>
+                        <button
+                            onClick={copyEmail}
+                            className="px-5 py-2.5 rounded-xl border border-zinc-200 bg-white hover:border-zinc-350 hover:text-zinc-950 text-sm font-mono text-zinc-600 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm group min-w-[140px]"
+                        >
+                            {copied ? (
+                                <>
+                                    <span className="text-emerald-500">✓</span>
+                                    <span className="text-emerald-500 font-medium">Copied!</span>
+                                </>
+                            ) : (
+                                <>
+                                    <span className="group-hover:scale-105 transition-transform">📄</span>
+                                    <span>Copy Email</span>
+                                </>
+                            )}
+                        </button>
                     </div>
                 </section>
             </Reveal>
