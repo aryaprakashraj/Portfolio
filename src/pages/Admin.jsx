@@ -188,7 +188,7 @@ function Admin() {
           onChange={e => setForm({ ...form, title: e.target.value })}
           className="bg-zinc-50 border border-zinc-200 rounded-lg px-4 py-3 text-lg font-bold text-zinc-900 outline-none focus:border-zinc-400 transition-colors"
         />
-        
+
         <textarea
           placeholder="Write your article here..."
           value={form.content}
@@ -231,27 +231,24 @@ function Admin() {
       <div className="flex gap-6 border-b border-zinc-200 pb-4 mb-8 font-mono text-sm select-none">
         <button
           onClick={() => { setActiveTab('articles'); setError('') }}
-          className={`pb-1 cursor-pointer transition-colors relative ${
-            activeTab === 'articles' ? 'text-royal font-semibold' : 'text-zinc-400 hover:text-zinc-950'
-          }`}
+          className={`pb-1 cursor-pointer transition-colors relative ${activeTab === 'articles' ? 'text-royal font-semibold' : 'text-zinc-400 hover:text-zinc-950'
+            }`}
         >
           Articles
           {activeTab === 'articles' && <span className="absolute bottom-[-17px] left-0 right-0 h-[2px] bg-royal shadow-[0_0_8px_#305CDE]" />}
         </button>
         <button
           onClick={() => { setActiveTab('newsletters'); setError('') }}
-          className={`pb-1 cursor-pointer transition-colors relative ${
-            activeTab === 'newsletters' ? 'text-royal font-semibold' : 'text-zinc-400 hover:text-zinc-950'
-          }`}
+          className={`pb-1 cursor-pointer transition-colors relative ${activeTab === 'newsletters' ? 'text-royal font-semibold' : 'text-zinc-400 hover:text-zinc-950'
+            }`}
         >
           Newsletters
           {activeTab === 'newsletters' && <span className="absolute bottom-[-17px] left-0 right-0 h-[2px] bg-royal shadow-[0_0_8px_#305CDE]" />}
         </button>
         <button
           onClick={() => { setActiveTab('subscribers'); setError('') }}
-          className={`pb-1 cursor-pointer transition-colors relative ${
-            activeTab === 'subscribers' ? 'text-royal font-semibold' : 'text-zinc-400 hover:text-zinc-950'
-          }`}
+          className={`pb-1 cursor-pointer transition-colors relative ${activeTab === 'subscribers' ? 'text-royal font-semibold' : 'text-zinc-400 hover:text-zinc-950'
+            }`}
         >
           Subscribers
           {activeTab === 'subscribers' && <span className="absolute bottom-[-17px] left-0 right-0 h-[2px] bg-royal shadow-[0_0_8px_#305CDE]" />}
@@ -396,15 +393,14 @@ function Admin() {
                     <p className="text-xs text-zinc-500 font-mono">{subscriber.mail || subscriber.email}</p>
                   </div>
                   <div className="flex items-center gap-3 font-mono text-xs">
-                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wider ${
-                      subscriber.status === 'SUBSCRIBED' || subscriber.status === 'ACTIVE'
+                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wider ${subscriber.status === 'SUBSCRIBED' || subscriber.status === 'ACTIVE'
                         ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                         : 'bg-zinc-100 text-zinc-600 border border-zinc-200'
-                    }`}>
+                      }`}>
                       {(subscriber.status || 'Subscribed').toLowerCase()}
                     </span>
                     <span className="text-zinc-400">
-                      {new Date(subscriber.createdAt || subscriber.subscribedDate).toLocaleDateString('en-US', {
+                      {new Date(subscriber.subscribedAt).toLocaleDateString('en-US', {
                         month: 'short', day: 'numeric', year: 'numeric'
                       })}
                     </span>
